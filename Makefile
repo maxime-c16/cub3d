@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+         #
+#    By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 16:05:45 by mcauchy           #+#    #+#              #
-#    Updated: 2023/01/27 15:55:28 by mcauchy          ###   ########.fr        #
+#    Updated: 2023/02/10 18:34:10 by lbisson          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,13 @@ OBJS			=	$(addprefix $(DIR_OBJ)/,$(FILES:.c=.o))
 
 CC				=	clang
 
-CFLAGS			=	-Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 NAME			=	cub3d
 
 HEADER			=	includes/cub3d.h
 
-MLX				=	mlx
+MLX				=	mlx_linux
 
 MLX_MAC			=	-Lmlx -framework OpenGL -framework AppKit
 
@@ -49,7 +49,7 @@ all				:	MK_LIBFT $(NAME)
 
 $(NAME)			:	$(OBJS)
 					@clear
-					@$(CC) $(OBJS) $(CFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit $(LIBFT_DIR)/libft.a  -o $(NAME)
+					@$(CC) $(OBJS) $(CFLAGS) $(MLX_LINUX) $(LIBFT_DIR)/libft.a  -o $(NAME)
 					@echo "cub3d : 100.00% compiled"
 
 $(DIR_OBJ)/%.o	:	$(SRC_DIR)/%.c $(HEADER)

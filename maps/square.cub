@@ -1,0 +1,12 @@
+NO ./texture_XPM/brick.xpm
+WE ./texture_XPM/eagle.xpm
+EA ./texture_XPM/blueWall.xpm
+SO ./texture_XPM/eagle.xpm
+
+
+F 240, 0, 
+C  0, 96, 253
+
+1111
+1111
+1111

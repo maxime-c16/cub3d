@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:35:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/07 10:12:34 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/02/07 20:00:08 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@ int main(int argc, char **argv)
 {
 	// Initialize variables and create window
 	t_mlx *ptr = _mlx();
-	t_map *map = _map();
+	// t_map *map = _map();
 
 	if (argc != 2)
 	{
 		dprintf(2, "Error\nWrong number of arguments\n");
 		exit(1);
 	}
-	map->path = ft_strdup(argv[1]);
-	map->fd = open(map->path, O_RDONLY);
-	map->height = get_height(map->fd);
-	map->map = ft_calloc(map->height, sizeof(char *));
-	parse_map(map->fd);
+	get_map(argv);
+	// map->path = ft_strdup(argv[1]);
+	// map->fd = open(map->path, O_RDONLY);
+	// map->height = get_height(map->fd);
+	// map->map = ft_calloc(map->height, sizeof(char *));
+	// parse_map(map->fd);
 	get_player_data();
 	ptr->mlx = mlx_init();
 	ptr->win = mlx_new_window(ptr->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");

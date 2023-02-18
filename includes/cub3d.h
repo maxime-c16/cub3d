@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/07 10:22:10 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/02/10 18:35:39 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,27 @@
 
 # define CUB3D_H
 
+# include <math.h>
+# include <errno.h>
+# include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <math.h>
-# include <fcntl.h>
 # include "libft.h"
-# include "../mlx/mlx.h"
+# include "../mlx_linux/mlx.h"
+# include "../mlx_macos/mlx.h"
 
 # ifndef M_PI
 #  define M_PI 3.141592653
 # endif
 
 # ifdef __linux__
-#  define KEY ESC 65307
+#  define KEY_ESC 65307
 #  define KEY_W 119
 #  define KEY_A 97
 #  define KEY_S 115
 #  define KEY_D 100
+#  define KEY_E 101
+#  define KEY_R 114
 #  define KEY_LEFT 65361
 #  define KEY_RIGHT 65363
 
@@ -48,6 +52,9 @@
 #  define KEY_RIGHT 124
 
 # endif
+
+# define SUCCESS 1
+# define FAILURE -1
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
@@ -105,17 +112,18 @@ typedef struct s_fov
 
 typedef struct s_map
 {
-	char	**map;
-	char	*path;
+	int		fd;
 	int		width;
 	int		height;
-	int		fd;
-	double	minimap_scale;
-	void	*minimap_img;
-	int		*minimap_addr;
 	int		minimap_bpp;
-	int		minimap_line_len;
 	int		minimap_endian;
+	int		minimap_line_len;
+	int		*minimap_addr;
+	double	minimap_scale;
+	char	*path;
+	char	**map;
+	char	**split;
+	void	*minimap_img;
 	t_fov	fov;
 } t_map;
 
@@ -216,10 +224,11 @@ void	draw_square(int x, int y, int color);
 
 //map
 
-int	parse_map(int fd);
+void	get_map(char **av);
 
 //free
 
+void	free_array(char **array);
 void	hasta_la_vista(void);
 void	handling_error(char *error_msg);
 
