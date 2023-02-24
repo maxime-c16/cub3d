@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:52:44 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/10 18:38:31 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/02/24 18:46:02 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,11 +193,14 @@ static int	get_color(t_mlx *mlx, char flag, char *str)
 static void	split_file(int fd)
 {
 	int		i;
+	int		j;
 	char	*line;
 	t_map	*map;
 
 	i = 0;
 	map = _map();
+	close(fd);
+	fd = open(map->path, O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -210,8 +213,14 @@ static void	split_file(int fd)
 	if (!map->split)
 		hasta_la_vista();
 	map->split[i] = NULL;
-	while (i--)
-		map->split[i] = get_next_line(fd);
+	printf("i : %d\n", i);
+	j = 0;
+	while (j < i)
+	{
+		map->split[j] = get_next_line(fd);
+		j++;
+	}
+	printf("j : %d\n",j);
 	close(fd);
 }
 

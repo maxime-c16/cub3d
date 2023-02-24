@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/10 18:35:39 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/02/24 18:14:42 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft.h"
-# include "../mlx_linux/mlx.h"
+# include "../mlx/mlx.h"
 # include "../mlx_macos/mlx.h"
 
 # ifndef M_PI

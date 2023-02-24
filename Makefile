@@ -33,8 +33,8 @@ NAME	=	cub3d
 
 MLX_MACOS =  -Lmlx -framework OpenGL -framework AppKit
 
-#.c.o:
-#	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+# .c.o:
+# 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 
 all: $(NAME)
@@ -42,11 +42,11 @@ all: $(NAME)
 $(NAME): $(MLX) $(OBJS) $(INC) 
 		 @$(MAKE) -C libft
 		 @echo "cub3d : libft compiled"
-		 $(CC) -g $(CFLAGS) -o $(NAME) $(OBJS) $(INC) libft/libft.a -Lmlx -lmlx_Linux -lXext -lX11 -lm -lz -fsanitize=address
+		 $(CC) -g $(CFLAGS) -o $(NAME) $(OBJS) $(INC) libft/libft.a -Lmlx -lmlx -lXext -lX11 -lm -lz
 		 @echo "cub3d : compiled"
 
 $(MLX):
-		cd mlx_linux && ./configure
+		cd mlx && ./configure
 		@echo "cub3d : minilibx compiled" 
 
 macos:  $(OBJS)
@@ -61,7 +61,7 @@ libft:
 clean:
 		@$(MAKE) -C libft clean
 		@$(RM) $(OBJS)
-		cd mlx_linux && ./configure clean
+		cd mlx && ./configure clean
 		@echo "cub3d : objects has been erased"
 
 fclean:	clean
