@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:52:44 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/24 18:46:02 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/02/24 19:03:13 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,41 +190,48 @@ static int	get_color(t_mlx *mlx, char flag, char *str)
 // 	return (1);
 // }
 
-static void	split_file(int fd)
+static int	count_line(t_map *map)
 {
-	int		i;
-	int		j;
+	int		len;
 	char	*line;
-	t_map	*map;
 
-	i = 0;
-	map = _map();
-	close(fd);
-	fd = open(map->path, O_RDONLY);
-	line = get_next_line(fd);
+	len = 0;
+	map->fd = open(map->path, O_RDONLY);
+	line = get_next_line(map->fd);
 	while (line)
 	{
-		i++;
+		len++;
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(map->fd);
 	}
 	free(line);
-	map->split = malloc(sizeof(char *) * (i + 1));
-	if (!map->split)
-		hasta_la_vista();
-	map->split[i] = NULL;
-	printf("i : %d\n", i);
-	j = 0;
-	while (j < i)
-	{
-		map->split[j] = get_next_line(fd);
-		j++;
-	}
-	printf("j : %d\n",j);
-	close(fd);
+	close(map->fd);
+	return (len);
 }
 
-static void	parse_map(int fd)
+static void	split_file(void)
+{
+	int		i;
+	int		len;
+	t_map	*map;
+
+	i = 0;
+	map = _map();
+	len = count_line(map);
+	map->fd = open(map->path, O_RDONLY);
+	map->split = malloc(sizeof(char *) * (len + 1));
+	if (!map->split)
+		hasta_la_vista();
+	map->split[len] = NULL;
+	while (i < len)
+	{
+		map->split[i] = get_next_line(map->fd);
+		i++;
+	}
+	close(map->fd);
+}
+
+static void	parse_map(void)
 {
 	int		i;
 	int		j;
@@ -232,7 +239,7 @@ static void	parse_map(int fd)
 
 	i = 0;
 	map = _map();
-	split_file(fd);
+	split_file();
 	while (map->split[i])
 	{
 		while (map->split[i] && map->split[i][j])
@@ -265,5 +272,6 @@ void	get_map(char **av)
 	check_file_exist();
 	check_file_not_empty();
 	map->map = ft_calloc(map->height, sizeof(char *));
-	parse_map(map->fd);
+	close(map->fd);
+	parse_map();
 }
