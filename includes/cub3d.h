@@ -6,11 +6,9 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/07 10:22:10 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/02/26 14:12:28 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//mon papa  a vu ce programme qui sappelle cub3d et il ma dit que cest un truc de fou@
 
 #ifndef CUB3D_H
 
@@ -178,7 +176,7 @@ typedef struct	s_sprite
 	int		endian;
 }				t_sprite;
 
-typedef struct	s_texture
+typedef struct	s_tex
 {
 	t_sprite	north;
 	t_sprite	south;
@@ -190,7 +188,7 @@ typedef struct	s_texture
 	int			color;
 	double		step;
 	double		tex_pos;
-}				t_texture;
+}				t_tex;
 
 //singleton
 
@@ -199,7 +197,7 @@ t_map		*_map(void);
 t_player	*_player(void);
 t_dda		*_dda(void);
 t_ray		*_ray(void);
-t_texture	*_texture(void);
+t_tex	*_tex(void);
 
 //tools
 
@@ -210,7 +208,7 @@ void	draw_wall(int x, int start, int end);
 void	refresh_image(void);
 int		calculate_rgb(t_color color);
 int 	calculate_trgb(int t, int r, int g, int b);
-void	calculate_y_texture(void);
+void	calculate_y_tex(void);
 void	match_color_tex(void);
 void	draw_square(int x, int y, int color);
 

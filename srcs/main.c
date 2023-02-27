@@ -6,13 +6,13 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:35:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/07 10:12:34 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/02/22 12:37:41 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	// Initialize variables and create window
 	t_mlx *ptr = _mlx();

@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:31:23 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/29 23:55:33 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/02/26 13:10:28 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,9 @@ void	draw_wall(int x, int start, int end)
 	}
 	while (y < end)
 	{
-		// calculate_y_texture();
-		// match_color_tex();
-		if (y < _map()->height * MMAP_L
-			&& x < _map()->width * MMAP_L)
-			mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
-		else
-			mlx->addr[y * mlx->line_len / 4 + x] = ((100 & 0xff) << 16) + (( 50& 0xff) << 8) + (220 & 0xff);
-		// mlx->addr[y * mlx->line_len / 4 + x] = _texture()->color;
+		calculate_y_tex();
+		match_color_tex();
+		mlx->addr[y * mlx->line_len / 4 + x] = _tex()->color;
 		y++;
 	}
 	while (y < WIN_HEIGHT)

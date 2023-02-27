@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:51:42 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/30 00:25:12 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/02/26 12:22:08 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	render_rays(void)
 		init_dda(x);
 		dda_loop(dda);
 		wall_height();
-		// calculate_sprite();
+		calculate_sprite();
 		draw_wall(x, _ray()->wall.start, _ray()->wall.end);
 		x++;
 	}

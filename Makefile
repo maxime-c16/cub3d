@@ -6,7 +6,7 @@
 #    By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 16:05:45 by mcauchy           #+#    #+#              #
-#    Updated: 2023/01/27 15:55:28 by mcauchy          ###   ########.fr        #
+#    Updated: 2023/02/26 14:10:11 by mcauchy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FILES			=	singleton.c main.c get_map.c tools.c free.c hooks/hooks.c \
 					hooks/hooks_utils.c dda/dda.c player.c dda/dda_utils.c\
 					dda/ray.c\
 					hooks/keyhooks.c hooks/keyhooks_utils.c tools2.c sprites/sprites.c\
-					singleton2.c minimap.c\
+					singleton2.c minimap.c tools3.c\
 
 SRC_DIR			=	srcs
 
