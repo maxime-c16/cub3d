@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:52:44 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/24 19:03:13 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/03/10 18:58:52 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	add_map_line(char *line)
 	i++;
 }
 
-static void	check_map_name(void)
+static void	check_file_name(void)
 {
 	int		i;
 	t_map	*map;
@@ -187,77 +187,26 @@ static int	get_color(t_mlx *mlx, char flag, char *str)
 // 		i++;
 // 	}
 // 	check_map_borders();
-// 	return (1);
+// 	return (1); 
 // }
-
-static int	count_line(t_map *map)
-{
-	int		len;
-	char	*line;
-
-	len = 0;
-	map->fd = open(map->path, O_RDONLY);
-	line = get_next_line(map->fd);
-	while (line)
-	{
-		len++;
-		free(line);
-		line = get_next_line(map->fd);
-	}
-	free(line);
-	close(map->fd);
-	return (len);
-}
-
-static void	split_file(void)
-{
-	int		i;
-	int		len;
-	t_map	*map;
-
-	i = 0;
-	map = _map();
-	len = count_line(map);
-	map->fd = open(map->path, O_RDONLY);
-	map->split = malloc(sizeof(char *) * (len + 1));
-	if (!map->split)
-		hasta_la_vista();
-	map->split[len] = NULL;
-	while (i < len)
-	{
-		map->split[i] = get_next_line(map->fd);
-		i++;
-	}
-	close(map->fd);
-}
 
 static void	parse_map(void)
 {
 	int		i;
-	int		j;
-	t_map	*map;
 
-	i = 0;
-	map = _map();
-	split_file();
-	while (map->split[i])
+	while (split)
 	{
-		while (map->split[i] && map->split[i][j])
+		i = 0;
+		while (split->line[i])
 		{
-			j = 0;
-			while (map->split[i][j] == ' ' ||
-				(map->split[i][j] >= '\t' && map->split[i][j] <= '\r'))
-				j++;
-			if (map->split[i][j] == '1')
-			{
-				check_invalid_char(map->split[i][j]);
-				add_map_line(map->split[i]);
-			}
-			else if (map->split[i][j] == 'F' || map->split[i][j] == 'C')
-				get_color(_mlx(), map->split[i][j], map->split[i]);
-			j++;
+			check_invalid_char(split->line[i]);
+			if (split->line[i] == '1')
+				add_map_line(split->line);
+			else if (split->line[i] == 'F' || split->line[i] == 'C')
+				get_color(_mlx(), split->line[i], split->line);
+			i++;
 		}
-		i++;
+		split = split->next;
 	}
 	check_map_borders();
 }
@@ -268,7 +217,7 @@ void	get_map(char **av)
 
 	map = _map();
 	map->path = ft_strdup(av[1]);
-	check_map_name();
+	check_file_name();
 	check_file_exist();
 	check_file_not_empty();
 	map->map = ft_calloc(map->height, sizeof(char *));

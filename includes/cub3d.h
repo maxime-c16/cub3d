@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/24 18:14:42 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/03/06 18:08:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ typedef struct s_map
 	double	minimap_scale;
 	char	*path;
 	char	**map;
-	char	**split;
 	void	*minimap_img;
 	t_fov	fov;
 } t_map;
