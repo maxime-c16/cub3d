@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/10 17:58:44 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/03/12 17:14:23 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	hasta_la_vista(void)
 		while (map->height--)
 			free(map->map[map->height]);
 		free(map->map);
-		free_array(map->split);
 		// free_array(map->map);
 		free(map->path);
 	}
