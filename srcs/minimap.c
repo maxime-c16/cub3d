@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:33:47 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/26 14:16:31 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:37:15 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,21 @@ void	draw_line(int x, int y, int x2, int y2)
 
 void	draw_fov(int x, int y)
 {
-	int		j;
 	int		i;
 	t_map	*map;
 
 	map = _map();
-	j = 0;
-	i = 0;
 	x += MMAP_L / 2;
 	y += MMAP_L / 2;
 	map->fov.prev_dir_x = _player()->dir_x;
 	map->fov.prev_dir_y = _player()->dir_y;
-	while (j < MINI_FOV)
+
+	for (i = 0; i < MINI_FOV; i++)
 	{
-		i = 0;
-		while (i < MINI_FOV - j)
-		{
-			map->fov.rotation = atan2(_player()->dir_y - map->fov.prev_dir_y, _player()->dir_x - map->fov.prev_dir_x);
-			map->fov.new_x = x + i*cos(map->fov.rotation) - j*sin(map->fov.rotation);
-			map->fov.new_y = y + i*sin(map->fov.rotation) + j*cos(map->fov.rotation);
-			map->minimap_addr[map->fov.new_y * map->minimap_line_len / 4 + map->fov.new_x] = rgb(255, 0, 0);
-			i++;
-		}
-		j++;
+		map->fov.rotation = atan2(_player()->dir_y - map->fov.prev_dir_y, _player()->dir_x - map->fov.prev_dir_x);
+		map->fov.new_x = x + i * cos(map->fov.rotation);
+		map->fov.new_y = y + i * sin(map->fov.rotation);
+		map->minimap_addr[map->fov.new_y * map->minimap_line_len / 4 + map->fov.new_x] = rgb(255, 0, 0);
 	}
 }
 
@@ -153,7 +145,7 @@ void	draw_minimap(void)
 			if (i == (int)_player()->x && j == (int)_player()->y)
 				draw_circle(i * MMAP_L, j * MMAP_L);
 			else if (map->map[j][i] == '1')
-				draw_square(i * MMAP_L, j * MMAP_L, rgb(200, 0, 200));
+				draw_square(i * MMAP_L, j * MMAP_L, rgb(55, 57, 59));
 			else if (map->map[j][i] != ' ')
 				draw_square(i * MMAP_L,
 					j * MMAP_L, calculate_rgb(_mlx()->c_floor));

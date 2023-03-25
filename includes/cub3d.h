@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/26 14:12:28 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/25 19:11:36 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@
 # define MIN_DIST 0.1
 # define MMAP_L 10
 # define MINI_FOV 15
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
 
 # define WALL '1'
 # define VOID ' '
@@ -88,6 +90,7 @@ typedef struct s_mlx
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		flag;
 	t_color	c_floor;
 	t_color	c_ceiling;
 } t_mlx;

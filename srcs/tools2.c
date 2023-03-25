@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:37:09 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/26 13:19:24 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:40:40 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,15 @@ void	match_color_tex(void)
 	dda = _dda();
 	tex = _tex();
 	if (dda->sideHit == NORTH)
-		tex->color = tex->north.addr[tex->y * tex->north.height / 4 + tex->x];
+		tex->color = tex->north.addr[tex->y * tex->north.height / 2 + tex->x];
 	else if (dda->sideHit == SOUTH)
-		tex->color = tex->south.addr[tex->y * tex->south.height / 4 + tex->x];
+		tex->color = tex->south.addr[tex->y * tex->south.height / 2 + tex->x];
 	else if (dda->sideHit == WEST)
-		tex->color = tex->west.addr[tex->y * tex->west.height / 4 + tex->x];
+		tex->color = tex->west.addr[tex->y * tex->west.height / 2 + tex->x];
 	else if (dda->sideHit == EAST)
-		tex->color = tex->east.addr[tex->y * tex->east.height / 4 + tex->x];
+		tex->color = tex->east.addr[tex->y * tex->east.height / 2 + tex->x];
+	if (dda->side == 1)
+		tex->color = (tex->color >> 1) & 8355711;
 }
 
 void	draw_square(int x, int y, int color)

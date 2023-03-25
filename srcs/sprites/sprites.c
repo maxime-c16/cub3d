@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:28:51 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/26 14:18:53 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/21 16:32:53 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	calculate_new_wall_x(t_dda *dda)
 
 void	step_wall(void)
 {
-	t_ray		*ray;
+	t_ray	*ray;
 	t_tex	*tex;
 
 	ray = _ray();
@@ -60,46 +60,33 @@ void	step_wall(void)
 		tex->step = 1.0 * tex->east.height / ray->wall.height;
 	else
 		tex->step = 1.0 * tex->west.height / ray->wall.height;
-	tex->step /= 4;
 }
 
-void	calculate_texture_X(t_tex *tex, t_dda *dda)
+void calculate_texture_X(t_tex *tex, t_dda *dda)
 {
-	if (tex->direction == NORTH_SOUTH)
-	{
-		if (dda->sideHit == NORTH)
-			tex->x = (int)(_ray()->wallX * (double)tex->north.width);
-		else
-			tex->x = (int)(_ray()->wallX * (double)tex->south.width);
-	}
+	if (dda->sideHit == NORTH)
+		tex->x = (int)(_ray()->wallX * (double)tex->north.width);
+	else if (dda->sideHit == SOUTH)
+		tex->x = (int)(_ray()->wallX * (double)tex->south.width);
+	else if (dda->sideHit == EAST)
+		tex->x = (int)(_ray()->wallX * (double)tex->east.width);
 	else
-	{
-		if (dda->sideHit == EAST)
-			tex->x = (int)(_ray()->wallX * (double)tex->east.width);
-		else
-			tex->x = (int)(_ray()->wallX * (double)tex->west.width);
-	}
-	if (dda->sideHit == NORTH_SOUTH && _ray()->ray_dir_x > 0)
-	{
-		if (dda->sideHit == NORTH_SOUTH)
-			tex->x = tex->north.width - tex->x - 1;
-		else
-			tex->x = tex->south.width - tex->x - 1;
-	}
-	else if (dda->sideHit == WEST_EAST && _ray()->ray_dir_y < 0)
-	{
-		if (dda->sideHit == EAST)
-			tex->x = tex->east.width - tex->x - 1;
-		else
-			tex->x = tex->west.width - tex->x - 1;
-	}
-	tex->x /= 4;
+		tex->x = (int)(_ray()->wallX * (double)tex->west.width);
+	if (dda->sideHit == NORTH && _ray()->ray_dir_x > 0)
+		tex->x = tex->north.width - tex->x - 1;
+	else if (dda->sideHit == SOUTH && _ray()->ray_dir_x < 0)
+		tex->x = tex->south.width - tex->x - 1;
+	else if (dda->sideHit == EAST && _ray()->ray_dir_y > 0)
+		tex->x = tex->east.width - tex->x - 1;
+	else if (dda->sideHit == WEST && _ray()->ray_dir_y < 0)
+		tex->x = tex->west.width - tex->x - 1;
 }
+
 
 void	calculate_sprite(void)
 {
 	t_tex	*tex;
-	t_dda		*dda;
+	t_dda	*dda;
 
 	tex = _tex();
 	dda = _dda();
@@ -107,5 +94,5 @@ void	calculate_sprite(void)
 	calculate_new_wall_x(dda);
 	calculate_texture_X(tex, dda);
 	step_wall();
-	tex->tex_pos = tex->step * (_ray()->wall.start - WIN_HEIGHT / 2 + _ray()->wall.height / 2);
+	tex->tex_pos = (_ray()->wall.start - WIN_HEIGHT / 2 + _ray()->wall.height / 2) * tex->step;
 }

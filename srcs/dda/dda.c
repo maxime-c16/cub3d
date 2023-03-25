@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:29:01 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/28 17:56:54 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/21 12:15:45 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static void	init_dda_1(double posX, double posY, double rayDirX, double rayDirY)
 	dda = _dda();
 	dda->mapX = (int)posX;
 	dda->mapY = (int)posY;
-	dda->sideDistX = 0;
-	dda->sideDistY = 0;
 	if (rayDirX == 0)
 		dda->deltaDistX = 1e30;
 	else
@@ -29,10 +27,7 @@ static void	init_dda_1(double posX, double posY, double rayDirX, double rayDirY)
 		dda->deltaDistY = 1e30;
 	else
 		dda->deltaDistY = fabs(1 / rayDirY);
-	dda->stepX = 0;
-	dda->stepY = 0;
 	dda->hit = 0;
-	dda->side = 0;
 }
 
 static void	init_dda_x(double posX, double rayDirX)
