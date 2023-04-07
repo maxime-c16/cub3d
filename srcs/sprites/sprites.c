@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:28:51 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 19:11:38 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 19:47:54 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	load_sprites(void)
 		tex->sprite[i].img = mlx_xpm_file_to_image(_mlx()->mlx, tex->sprite[i].path,
 			&tex->sprite[i].width, &tex->sprite[i].height);
 		if (!tex->sprite[i].img)
+		{
+			printf("case 1\n");	
 			handling_error("a memory allocation failed", NULL);
+		}
 		tex->sprite[i].addr = mlx_get_data_addr(tex->sprite[i].img,
 			&tex->sprite[i].bpp, &tex->sprite[i].line_len, &tex->sprite[i].endian);
 		fill_pixel(i, tex->sprite);

@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 19:10:59 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 20:12:14 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,17 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	destroy_sprites(void *mlx)
+void	free_pixels(int size, int **pixels)
 {
-	t_tex	*tex;
+	int	i;
 
-	tex = _tex();
-	if (tex->sprite[NORTH].img)
+	i = 0;
+	while (i < size)
 	{
-		free(tex->sprite[NORTH].addr);
-		mlx_destroy_image(mlx, tex->sprite[NORTH].img);
+		free(pixels[i]);
+		i++;
 	}
-	if (tex->sprite[SOUTH].img)
-	{
-		free(tex->sprite[SOUTH].addr);
-		mlx_destroy_image(mlx, tex->sprite[SOUTH].img);
-	}
-	if (tex->sprite[WEST].img)
-	{
-		free(tex->sprite[WEST].addr);
-		mlx_destroy_image(mlx, tex->sprite[WEST].img);
-	}
-	if (tex->sprite[EAST].img)
-	{
-		mlx_destroy_image(mlx, tex->sprite[EAST].img);
-	}
+	free(pixels);
 }
 
 void	destroy_minimap(void *mlx)
@@ -57,25 +44,26 @@ void	destroy_minimap(void *mlx)
 
 	map = _map();
 	if (map->minimap_img)
-	{
-		free(map->minimap_addr);
 		mlx_destroy_image(mlx, map->minimap_img);
-	}
 }
 
 void	free_texs(void)
 {
+	int		i;
 	t_tex	*tex;
+	t_mlx	*mlx;
 
+	i = 0;
 	tex = _tex();
-	free(tex->sprite[NORTH].path);
-	free(tex->sprite[NORTH].addr);
-	free(tex->sprite[SOUTH].path);
-	free(tex->sprite[SOUTH].addr);
-	free(tex->sprite[WEST].path);
-	free(tex->sprite[WEST].addr);
-	free(tex->sprite[EAST].path);
-	free(tex->sprite[EAST].addr);
+	mlx = _mlx();
+	while (i < 4)
+	{	
+		free(tex->sprite[i].path);
+		free_pixels(tex->sprite[i].height, tex->sprite[i].pixels);
+		if (mlx->mlx && tex->sprite[i].img)
+			mlx_destroy_image(mlx->mlx, tex->sprite[i].img);
+		i++;
+	}
 }
 
 void	hasta_la_vista(int status)
@@ -94,7 +82,6 @@ void	hasta_la_vista(int status)
 		close(map->fd);
 	if (mlx->mlx)
 	{
-		destroy_sprites(mlx->mlx);
 		if (map->minimap_img)
 			destroy_minimap(mlx->mlx);
 		mlx_destroy_image(mlx->mlx, mlx->img);
