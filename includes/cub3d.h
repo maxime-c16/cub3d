@@ -6,11 +6,9 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/05 19:11:19 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:58:37 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//mon papa  a vu ce programme qui sappelle cub3d et il ma dit que cest un truc de fou@
 
 #ifndef CUB3D_H
 
@@ -81,6 +79,21 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
+# define ENEMY_IDLE 0
+# define ENEMY_WALK 1
+# define ENEMY_ATTACK 2
+# define NUM_IDLE_FRAMES 4
+# define NUM_WALK_FRAMES 2
+# define ENEMY_SPEED 0.05
+
+typedef enum	e_enemy_direction
+{
+	ENEMY_NORTH,
+	ENEMY_SOUTH,
+	ENEMY_WEST,
+	ENEMY_EAST
+}				t_enemy_direction;
+
 typedef struct	s_color
 {
 	int		r;
@@ -89,7 +102,7 @@ typedef struct	s_color
 	int		filled;
 }				t_color;
 
-typedef struct s_mlx
+typedef struct	s_mlx
 {
 	void	*mlx;
 	void	*win;
@@ -98,9 +111,10 @@ typedef struct s_mlx
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		flag;
 	t_color	c_floor;
 	t_color	c_ceiling;
-} t_mlx;
+}				t_mlx;
 
 typedef struct s_fov
 {
@@ -116,6 +130,10 @@ typedef struct s_map
 	int		fd;
 	int		width;
 	int		height;
+	int		border_size;
+	int		border_color;
+	int		hit_wall_x;
+	int		hit_wall_y;
 	int		minimap_bpp;
 	int		minimap_endian;
 	int		minimap_line_len;
@@ -178,28 +196,39 @@ typedef struct s_dda
 
 typedef struct	s_sprite
 {
+	int		**pixels;
 	char	*path;
+	char	*addr;
 	void	*img;
-	int		*addr;
 	int		bpp;
 	int		width;
 	int		height;
+	int		line_len;
 	int		endian;
 }				t_sprite;
 
-typedef struct	s_texture
+typedef struct	s_tex
 {
-	t_sprite	north;
-	t_sprite	south;
-	t_sprite	west;
-	t_sprite	east;
+	t_sprite	sprite[4];
 	int			x;
 	int			y;
-	int			direction;
+	int			sideHit;
 	int			color;
 	double		step;
 	double		tex_pos;
-}				t_texture;
+}				t_tex;
+
+typedef struct	s_enemy
+{
+	double				x;
+	double				y;
+	double				animation_speed;
+	double				animation_timer;
+	int					animation_state;
+	int					animation_frame;
+	t_enemy_direction	direction;
+	t_sprite			walking[4][9];
+}				t_enemy;
 
 //singleton
 
@@ -208,7 +237,8 @@ t_map		*_map(void);
 t_player	*_player(void);
 t_dda		*_dda(void);
 t_ray		*_ray(void);
-t_texture	*_texture(void);
+t_tex		*_tex(void);
+t_enemy		*_enemy(void);
 
 //tools
 
@@ -217,10 +247,10 @@ int		get_height(int fd);
 void	wall_height(void);
 void	draw_wall(int x, int start, int end);
 void	refresh_image(void);
-int		calculate_rgb(t_color color);
-int 	calculate_trgb(int t, int r, int g, int b);
-void	calculate_y_texture(void);
-void	match_color_tex(void);
+int		calculate_color(t_color color);
+int		calculate_rgb(unsigned char r, unsigned char g, unsigned char b);
+void	calculate_y_tex(void);
+void	match_color_tex(int y);
 void	draw_square(int x, int y, int color);
 
 //parsing
@@ -237,10 +267,10 @@ void 	skip_to_map(int fd);
 void	parsing(char **av);
 void	parse_map(char **av);
 void	parse_file(char **av);
-void	parse_texture_north(char *line);
-void	parse_texture_south(char *line);
-void	parse_texture_west(char *line);
-void	parse_texture_east(char *line);
+void	parse_tex_north(char *line);
+void	parse_tex_south(char *line);
+void	parse_tex_west(char *line);
+void	parse_tex_east(char *line);
 void	parse_color(char *line, t_color *color);
 
 //free
@@ -283,10 +313,22 @@ int		close_window(void);
 
 void	load_sprites(void);
 void	calculate_sprite(void);
+int		get_color(double y);
+void	sprite_put_pixel(int x, int y, int color);
 
 //minimap
 
 void	draw_minimap(void);
 void	highlight_block_border(void);
+
+//enemy
+
+void	update_enemy_direction(void);
+void	update_enemy_animation(void);
+void	move_enemy_towards_player(void);
+void	spawn_enemy_opposite_player(void);
+void	draw_enemy_sprite(void);
+void	load_walk(void);
+void	draw_enemy_sprite(void);
 
 #endif

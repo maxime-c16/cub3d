@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:29:01 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/28 17:56:54 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/31 18:28:27 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static void	init_dda_1(double posX, double posY, double rayDirX, double rayDirY)
 	dda = _dda();
 	dda->mapX = (int)posX;
 	dda->mapY = (int)posY;
-	dda->sideDistX = 0;
-	dda->sideDistY = 0;
 	if (rayDirX == 0)
 		dda->deltaDistX = 1e30;
 	else
@@ -29,10 +27,7 @@ static void	init_dda_1(double posX, double posY, double rayDirX, double rayDirY)
 		dda->deltaDistY = 1e30;
 	else
 		dda->deltaDistY = fabs(1 / rayDirY);
-	dda->stepX = 0;
-	dda->stepY = 0;
 	dda->hit = 0;
-	dda->side = 0;
 }
 
 static void	init_dda_x(double posX, double rayDirX)
@@ -105,4 +100,9 @@ void	dda_loop(t_dda *dda)
 			dda->hit = 1;
 	}
 	set_dda_side();
+	if (dda->sideHit == NORTH_SOUTH)
+		_ray()->wallX = _player()->y + (dda->perpWallDist * _ray()->ray_dir_y);
+	else
+		_ray()->wallX = _player()->x + (dda->perpWallDist * _ray()->ray_dir_x);
+	_ray()->wallX -= floor(_ray()->wallX);
 }

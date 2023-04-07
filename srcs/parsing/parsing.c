@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:38:15 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/05 20:07:56 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:58:37 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static void	parse_settings(char *line)
 {
 	if (*line && ft_strnstr(line, "NO", 2))
-		parse_texture_north(line + 2);
+		parse_tex_north(line + 2);
 	else if (*line && ft_strnstr(line, "SO", 2))
-		parse_texture_south(line + 2);
+		parse_tex_south(line + 2);
 	else if (*line && ft_strnstr(line, "WE", 2))
-		parse_texture_west(line + 2);
+		parse_tex_west(line + 2);
 	else if (*line && ft_strnstr(line, "EA", 2))
-		parse_texture_east(line + 2);
+		parse_tex_east(line + 2);
 	else if (*line && ft_strnstr(line, "F", 1))
 		parse_color(line + 1, &_mlx()->c_floor);
 	else if (*line && ft_strnstr(line, "C", 1))

@@ -6,14 +6,14 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:35:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/06 18:38:53 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:53:58 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <stdio.h>
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_mlx *ptr = _mlx();
 

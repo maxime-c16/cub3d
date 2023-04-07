@@ -6,13 +6,13 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:37:09 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/29 23:55:33 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/01 17:05:22 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	calculate_rgb(t_color color)
+int	calculate_color(t_color color)
 {
 	int	r;
 	int	g;
@@ -21,46 +21,109 @@ int	calculate_rgb(t_color color)
 	r = color.r;
 	g = color.g;
 	b = color.b;
-	return (((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff));
+	return ((r << 16) | (g << 8) | b);
 }
 
-int calculate_trgb(int t, int r, int g, int b)
+int calculate_rgb(unsigned char r, unsigned char g, unsigned char b)
 {
-	return (((t & 0xff) << 24) + ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff));
+	return ((r << 16) | (g << 8) | b);
 }
 
-void	calculate_y_texture(void)
+void	calculate_y_tex(void)
 {
-	t_texture	*tex;
-	t_dda		*dda;
+	t_tex	*tex;
 
-	tex = _texture();
-	dda = _dda();
-	if (dda->sideHit == NORTH)
-		tex->y = (int)tex->tex_pos & (tex->north.height - 1);
-	else if (dda->sideHit == SOUTH)
-		tex->y = (int)tex->tex_pos & (tex->south.height - 1);
-	else if (dda->sideHit == WEST)
-		tex->y = (int)tex->tex_pos & (tex->west.height - 1);
-	else if (dda->sideHit == EAST)
-		tex->y = (int)tex->tex_pos & (tex->east.height - 1);
+	tex = _tex();
+	tex->y = (int)tex->tex_pos & (tex->sprite[(int)_dda()->sideHit].height - 1);
+	tex->tex_pos += tex->step;
 }
 
-void	match_color_tex(void)
+void	match_color_tex(int y)
 {
 	t_dda		*dda;
-	t_texture	*tex;
+	t_tex	*tex;
 
 	dda = _dda();
-	tex = _texture();
-	if (dda->sideHit == NORTH)
-		tex->color = tex->north.addr[tex->y * tex->north.width / 4 + tex->x];
-	else if (dda->sideHit == SOUTH)
-		tex->color = tex->south.addr[tex->y * tex->south.width / 4 + tex->x];
-	else if (dda->sideHit == WEST)
-		tex->color = tex->west.addr[tex->y * tex->west.width / 4 + tex->x];
-	else if (dda->sideHit == EAST)
-		tex->color = tex->east.addr[tex->y * tex->east.width / 4 + tex->x];
+	tex = _tex();
+	tex->color = tex->sprite[(int)dda->sideHit].pixels[y][tex->x];
+	if (dda->side == 1)
+		tex->color = (tex->color >> 1) & 8355711;
+}
+
+void	sprite_put_pixel(int x, int y, int color)
+{
+	char	*dst;
+
+	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
+		return ;
+	dst = (char *)_mlx()->addr + (y * _mlx()->line_len + x * (_mlx()->bpp / 8));
+	*(unsigned int *)dst = color;
+}
+
+int	**pick_sprite(void)
+{
+	t_dda	*dda;
+	t_ray	*ray;
+
+	dda = _dda();
+	ray = _ray();
+	if (dda->side && ray->ray_dir_y > 0)
+		return (_tex()->sprite[NORTH].pixels);
+	else if (dda->side && ray->ray_dir_y < 0)
+		return (_tex()->sprite[SOUTH].pixels);
+	else if (!dda->side && ray->ray_dir_x > 0)
+		return (_tex()->sprite[WEST].pixels);
+	else
+		return (_tex()->sprite[EAST].pixels);
+}
+
+int lerp(int a, int b, float t)
+{
+	int	r;
+	int	g;
+	int	c;
+
+	r = ((a >> 16) & 0xFF) + (((b >> 16) & 0xFF) - ((a >> 16) & 0xFF)) * t;
+	g = ((a >> 8) & 0xFF) + (((b >> 8) & 0xFF) - ((a >> 8) & 0xFF)) * t;
+	c = (a & 0xFF) + ((b & 0xFF) - (a & 0xFF)) * t;
+	return ((r << 16) | (g << 8) | c);
+}
+
+int get_color(double y)
+{
+	t_ray	*ray;
+	t_dda	*dda;
+	int		color;
+	int		border_distance;
+
+	ray = _ray();
+	dda = _dda();
+	border_distance = -1;
+	_map()->border_size = 3; // Adjust this value to control the border thickness
+	_tex()->x = (int)(ray->wallX * (double)_tex()->sprite[(int)dda->sideHit].width);
+	if ((!dda->side && ray->ray_dir_x > 0) || (dda->side && ray->ray_dir_y < 0))
+		_tex()->x = _tex()->sprite[(int)dda->sideHit].width - _tex()->x - 1;
+	color = pick_sprite()[(int)y][_tex()->x];
+	if ((int)y < _map()->border_size)
+		border_distance = (int)y;
+	else if ((int)y >= _tex()->sprite[(int)dda->sideHit].height - _map()->border_size)
+		border_distance = _tex()->sprite[(int)dda->sideHit].height - (int)y - 1;
+	if (_tex()->x < _map()->border_size)
+	{
+		if (_tex()->x < border_distance || border_distance == -1)
+		border_distance = _tex()->x;
+	}
+	else if (_tex()->x >= _tex()->sprite[(int)dda->sideHit].width - _map()->border_size)
+	{
+		if (_tex()->sprite[(int)dda->sideHit].width - _tex()->x - 1 < border_distance || border_distance == -1)
+			border_distance = _tex()->sprite[(int)dda->sideHit].width - _tex()->x - 1;
+	}
+	if (border_distance != -1 && _map()->hit_wall_x == dda->mapX && _map()->hit_wall_y == dda->mapY)
+	{
+		color = lerp(color,  calculate_rgb(255, 255, 255),
+			(float)(_map()->border_size - border_distance) / _map()->border_size);
+	}
+	return color;
 }
 
 void	draw_square(int x, int y, int color)

@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:01:25 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/06 18:58:08 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 19:08:54 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int	check_param_filled(void)
 {
 	t_mlx		*mlx;
-	t_texture	*tex;
+	t_tex	*tex;
 
 	mlx = _mlx();
-	tex = _texture();
-	if (!tex->north.path || !tex->south.path || !tex->west.path
-		|| !tex->east.path)
+	tex = _tex();
+	if (!tex->sprite[NORTH].path || !tex->sprite[SOUTH].path
+		|| !tex->sprite[WEST].path || !tex->sprite[EAST].path)
 		return (FALSE);
 	if (mlx->c_ceiling.filled == FALSE || mlx->c_floor.filled == FALSE)
 		return (FALSE);

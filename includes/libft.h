@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 12:45:04 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/05 18:26:15 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:50:41 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s1);
 char	*ft_itoa(int n);
 char	*ft_strcpy(char *str, char *old_str);
+char	*ft_strcat(char *dest, char *src);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 

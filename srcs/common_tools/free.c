@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/21 22:36:38 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/07 19:10:59 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,27 @@ void	free_array(char **array)
 
 void	destroy_sprites(void *mlx)
 {
-	t_texture	*tex;
+	t_tex	*tex;
 
-	tex = _texture();
-	if (tex->north.img)
+	tex = _tex();
+	if (tex->sprite[NORTH].img)
 	{
-		free(tex->north.addr);
-		mlx_destroy_image(mlx, tex->north.img);
+		free(tex->sprite[NORTH].addr);
+		mlx_destroy_image(mlx, tex->sprite[NORTH].img);
 	}
-	if (tex->south.img)
+	if (tex->sprite[SOUTH].img)
 	{
-		free(tex->south.addr);
-		mlx_destroy_image(mlx, tex->south.img);
+		free(tex->sprite[SOUTH].addr);
+		mlx_destroy_image(mlx, tex->sprite[SOUTH].img);
 	}
-	if (tex->west.img)
+	if (tex->sprite[WEST].img)
 	{
-		free(tex->west.addr);
-		mlx_destroy_image(mlx, tex->west.img);
+		free(tex->sprite[WEST].addr);
+		mlx_destroy_image(mlx, tex->sprite[WEST].img);
 	}
-	if (tex->east.img)
+	if (tex->sprite[EAST].img)
 	{
-		mlx_destroy_image(mlx, tex->east.img);
+		mlx_destroy_image(mlx, tex->sprite[EAST].img);
 	}
 }
 
@@ -63,19 +63,19 @@ void	destroy_minimap(void *mlx)
 	}
 }
 
-void	free_textures(void)
+void	free_texs(void)
 {
-	t_texture	*tex;
+	t_tex	*tex;
 
-	tex = _texture();
-	free(tex->north.path);
-	free(tex->north.addr);
-	free(tex->south.path);
-	free(tex->south.addr);
-	free(tex->west.path);
-	free(tex->west.addr);
-	free(tex->east.path);
-	free(tex->east.addr);
+	tex = _tex();
+	free(tex->sprite[NORTH].path);
+	free(tex->sprite[NORTH].addr);
+	free(tex->sprite[SOUTH].path);
+	free(tex->sprite[SOUTH].addr);
+	free(tex->sprite[WEST].path);
+	free(tex->sprite[WEST].addr);
+	free(tex->sprite[EAST].path);
+	free(tex->sprite[EAST].addr);
 }
 
 void	hasta_la_vista(int status)
@@ -87,7 +87,7 @@ void	hasta_la_vista(int status)
 	mlx = _mlx();
 	free(map->line);
 	free(map->path);
-	free_textures();
+	free_texs();
 	if (map->map)
 		free_array(map->map);
 	if (map->fd)

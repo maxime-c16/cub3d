@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dda_utils.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/20 17:11:14 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/21 13:02:20 by mcauchy          ###   ########.fr       */
+/*   Created: 2023/04/01 17:24:00 by mcauchy           #+#    #+#             */
+/*   Updated: 2023/04/01 17:25:19 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../includes/libft.h"
 
-void	set_dda_side(void)
+char	*ft_strcat(char *s1, char *s2)
 {
-	t_dda	*dda;
+	int	i;
+	int	j;
 
-	dda = _dda();
-	if (dda->hit == 0)
-		return ;
-	if (dda->side == 0)
+	i = 0;
+	j = 0;
+	while (s1[i])
+		i++;
+	while (s2[j])
 	{
-		if (_ray()->ray_dir_x > 0)
-			dda->sideHit = NORTH;
-		else
-			dda->sideHit = SOUTH;
+		s1[i] = s2[j];
+		i++;
+		j++;
 	}
-	else
-	{
-		if (_ray()->ray_dir_y > 0)
-			dda->sideHit = WEST;
-		else
-			dda->sideHit = EAST;
-	}
+	s1[i] = '\0';
+	return (s1);
 }

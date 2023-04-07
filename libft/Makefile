@@ -6,7 +6,7 @@
 #    By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 17:39:45 by mcauchy           #+#    #+#              #
-#    Updated: 2023/01/21 18:40:37 by mcauchy          ###   ########.fr        #
+#    Updated: 2023/04/01 17:24:47 by mcauchy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS			=	ft_atoi.c ft_isascii.c ft_memccpy.c ft_memset.c ft_strlcpy.c ft_strrchr
 					ft_calloc.c ft_isprint.c ft_memcmp.c  ft_putendl_fd.c ft_strdup.c  ft_strmapi.c ft_substr.c \
 					ft_isalnum.c ft_itoa.c ft_memcpy.c ft_putnbr_fd.c ft_strjoin.c ft_strncmp.c ft_tolower.c \
 					ft_isalpha.c ft_memmove.c ft_putstr_fd.c ft_strlcat.c ft_strnstr.c ft_toupper.c ft_strcmp.c \
-					ft_strjoin_char.c ft_strcpy.c ft_str_is_numeric.c get_next_line.c get_next_line_utils.c \
+					ft_strjoin_char.c ft_strcpy.c ft_str_is_numeric.c get_next_line.c get_next_line_utils.c ft_strcat.c\
 
 BONUS			=	ft_lstnew.c ft_lstadd_back.c ft_lstlast.c ft_lstsize.c
 
