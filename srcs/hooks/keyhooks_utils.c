@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:47:32 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/28 13:58:33 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/01 14:32:15 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,32 @@ void	rotate_right(void)
 	ptr->plane_y = (old_plane_x * sin(-ptr->rot_speed)) + (ptr->plane_y * cos(-ptr->rot_speed));
 }
 
-int	check_wall(double x, double y)
+int check_wall(double x, double y)
 {
+	double	half_width;
+	double	half_height;
+
+	half_width = 0.1;
+	half_height = 0.1;
 	if (_map()->map[(int)y][(int)x] == '1')
 		return (1);
-	else if (_map()->map[(int)(y + 0.1)][(int)(x + 0.1)] == '1')
+	if (_map()->map[(int)(y + half_height)][(int)(x + half_width)] == '1')
 		return (1);
-	else if (_map()->map[(int)(y - 0.1)][(int)(x - 0.1)] == '1')
+	if (_map()->map[(int)(y - half_height)][(int)(x - half_width)] == '1')
 		return (1);
-	else if (_map()->map[(int)(y + 0.1)][(int)(x - 0.1)] == '1')
+	if (_map()->map[(int)(y + half_height)][(int)(x - half_width)] == '1')
 		return (1);
-	else if (_map()->map[(int)(y - 0.1)][(int)(x + 0.1)] == '1')
+	if (_map()->map[(int)(y - half_height)][(int)(x + half_width)] == '1')
 		return (1);
+	if (_map()->map[(int)(y + half_height)][(int)x] == '1')
+		return (1);
+	if (_map()->map[(int)(y - half_height)][(int)x] == '1')
+		return (1);
+	if (_map()->map[(int)y][(int)(x + half_width)] == '1')
+		return (1);
+	if (_map()->map[(int)y][(int)(x - half_width)] == '1')
+		return (1);
+
 	return (0);
 }
+

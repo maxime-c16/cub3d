@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 15:52:44 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/21 14:33:17 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/26 19:37:07 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_map_borders(void)
 	return (1);
 }
 
-int	get_color(t_mlx *mlx, char flag, char *str)
+int	parse_color(t_mlx *mlx, char flag, char *str)
 {
 	int		i;
 	char	**split;
@@ -121,7 +121,7 @@ int	parse_map(int fd)
 			// 	return (1);
 			if (line[j] == 'F' || line[j] == 'C')
 			{
-				if (get_color(_mlx(), line[j], line + j + 1) == -1)
+				if (parse_color(_mlx(), line[j], line + j + 1) == -1)
 					return (1);
 			}
 			if (check_first_map_line(line) == 1)

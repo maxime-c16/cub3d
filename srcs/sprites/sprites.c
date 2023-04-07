@@ -6,32 +6,67 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:28:51 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/21 16:32:53 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/01 17:34:32 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+void	fill_pixel(int i, t_sprite *sprite)
+{
+	int		x;
+	int		y;
+	int		z;
+	int		color;
+
+	y = 0;
+	z = 0;
+	sprite[i].pixels = (int **)malloc(sizeof(int *) * sprite[i].height);
+	if (!sprite[i].pixels)
+		hasta_la_vista();
+	while (y < sprite[i].height)
+	{
+		x = 0;
+		sprite[i].pixels[y] = (int *)malloc(sizeof(int) * sprite[i].width);
+		if (!sprite[i].pixels[y])
+			hasta_la_vista();
+		while (x < sprite[i].width)
+		{
+			color = calculate_rgb((unsigned char)sprite[i].addr[z + 2],
+				(unsigned char)sprite[i].addr[z + 1], (unsigned char)sprite[i].addr[z]);
+			if (color != 0)
+				sprite[i].pixels[y][x] = color;
+			x++;
+			z += 4;
+		}
+		y++;
+	}
+}
+
 void	load_sprites(void)
 {
 	t_tex	*tex;
+	int		i;
 
 	tex = _tex();
-	tex->north.img = mlx_xpm_file_to_image(_mlx()->mlx, tex->north.path, &tex->north.width, &tex->north.height);
-	tex->south.img = mlx_xpm_file_to_image(_mlx()->mlx, tex->south.path, &tex->south.width, &tex->south.height);
-	tex->east.img = mlx_xpm_file_to_image(_mlx()->mlx, tex->east.path, &tex->east.width, &tex->east.height);
-	tex->west.img = mlx_xpm_file_to_image(_mlx()->mlx, tex->west.path, &tex->west.width, &tex->west.height);
-	if (!tex->north.img || !tex->south.img || !tex->east.img || !tex->west.img)
-		hasta_la_vista();
-	tex->north.addr = (int *)mlx_get_data_addr(tex->north.img, &tex->north.bpp, &tex->north.width, &tex->north.endian);
-	tex->south.addr = (int *)mlx_get_data_addr(tex->south.img, &tex->south.bpp, &tex->south.width, &tex->south.endian);
-	tex->east.addr = (int *)mlx_get_data_addr(tex->east.img, &tex->east.bpp, &tex->east.width, &tex->east.endian);
-	tex->west.addr = (int *)mlx_get_data_addr(tex->west.img, &tex->west.bpp, &tex->west.width, &tex->west.endian);
-	if (!tex->north.addr || !tex->south.addr || !tex->east.addr || !tex->west.addr)
-		hasta_la_vista();
+	i = 0;
+	while (i < 4)
+	{
+		tex->sprite[i].img = mlx_xpm_file_to_image(_mlx()->mlx, tex->sprite[i].path,
+			&tex->sprite[i].width, &tex->sprite[i].height);
+		if (!tex->sprite[i].img)
+			hasta_la_vista();
+		tex->sprite[i].addr = mlx_get_data_addr(tex->sprite[i].img,
+			&tex->sprite[i].bpp, &tex->sprite[i].line_len, &tex->sprite[i].endian);
+		fill_pixel(i, tex->sprite);
+		if (!tex->sprite[i].addr)
+			hasta_la_vista();
+		i++;
+	}
+	load_walk();
 }
 
-static void	calculate_new_wall_x(t_dda *dda)
+static void	calculate_wall_x(t_dda *dda)
 {
 	t_ray		*ray;
 	t_player	*player;
@@ -52,36 +87,16 @@ void	step_wall(void)
 
 	ray = _ray();
 	tex = _tex();
-	if (_dda()->sideHit == NORTH)
-		tex->step = 1.0 * tex->north.height / ray->wall.height;
-	else if (_dda()->sideHit == SOUTH)
-		tex->step = 1.0 * tex->south.height / ray->wall.height;
-	else if (_dda()->sideHit == EAST)
-		tex->step = 1.0 * tex->east.height / ray->wall.height;
-	else
-		tex->step = 1.0 * tex->west.height / ray->wall.height;
+	tex->step = 1.0 * tex->sprite[(int)_dda()->sideHit].width / ray->wall.height;
 }
 
 void calculate_texture_X(t_tex *tex, t_dda *dda)
 {
-	if (dda->sideHit == NORTH)
-		tex->x = (int)(_ray()->wallX * (double)tex->north.width);
-	else if (dda->sideHit == SOUTH)
-		tex->x = (int)(_ray()->wallX * (double)tex->south.width);
-	else if (dda->sideHit == EAST)
-		tex->x = (int)(_ray()->wallX * (double)tex->east.width);
-	else
-		tex->x = (int)(_ray()->wallX * (double)tex->west.width);
-	if (dda->sideHit == NORTH && _ray()->ray_dir_x > 0)
-		tex->x = tex->north.width - tex->x - 1;
-	else if (dda->sideHit == SOUTH && _ray()->ray_dir_x < 0)
-		tex->x = tex->south.width - tex->x - 1;
-	else if (dda->sideHit == EAST && _ray()->ray_dir_y > 0)
-		tex->x = tex->east.width - tex->x - 1;
-	else if (dda->sideHit == WEST && _ray()->ray_dir_y < 0)
-		tex->x = tex->west.width - tex->x - 1;
+	tex->x = (int)(_ray()->wallX * (double)tex->sprite[(int)dda->sideHit].width);
+	if ((dda->sideHit == NORTH_SOUTH && _ray()->ray_dir_x > 0) ||
+		(dda->sideHit == WEST_EAST && _ray()->ray_dir_y < 0))
+		tex->x = tex->sprite[(int)dda->sideHit].width - tex->x - 1;
 }
-
 
 void	calculate_sprite(void)
 {
@@ -90,8 +105,8 @@ void	calculate_sprite(void)
 
 	tex = _tex();
 	dda = _dda();
-	tex->direction = dda->sideHit;
-	calculate_new_wall_x(dda);
+	tex->sideHit = dda->sideHit;
+	calculate_wall_x(dda);
 	calculate_texture_X(tex, dda);
 	step_wall();
 	tex->tex_pos = (_ray()->wall.start - WIN_HEIGHT / 2 + _ray()->wall.height / 2) * tex->step;

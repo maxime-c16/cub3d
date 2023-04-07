@@ -6,13 +6,13 @@
 #    By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 16:05:45 by mcauchy           #+#    #+#              #
-#    Updated: 2023/02/26 14:10:11 by mcauchy          ###   ########.fr        #
+#    Updated: 2023/04/01 15:44:52 by mcauchy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FILES			=	singleton.c main.c get_map.c tools.c free.c hooks/hooks.c \
 					hooks/hooks_utils.c dda/dda.c player.c dda/dda_utils.c\
-					dda/ray.c\
+					dda/ray.c enemy.c\
 					hooks/keyhooks.c hooks/keyhooks_utils.c tools2.c sprites/sprites.c\
 					singleton2.c minimap.c tools3.c\
 

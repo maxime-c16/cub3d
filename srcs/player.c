@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 19:31:26 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/21 14:18:53 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/01 18:21:34 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	setPlayer(double x, double y, double angle)
 	player->angle = angle;
 	player->fov = M_PI / 3;
 	player->speed = 0.1;
-	player->rot_speed = M_PI / 80;
+	player->rot_speed = M_PI / 40;
 	set_plane();
 }
 

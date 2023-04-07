@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/25 19:11:36 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/01 18:26:38 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@
 # define MIN_DIST 0.1
 # define MMAP_L 10
 # define MINI_FOV 15
-# define TEX_WIDTH 64
-# define TEX_HEIGHT 64
 
 # define WALL '1'
 # define VOID ' '
@@ -74,6 +72,21 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
+# define ENEMY_IDLE 0
+# define ENEMY_WALK 1
+# define ENEMY_ATTACK 2
+# define NUM_IDLE_FRAMES 4
+# define NUM_WALK_FRAMES 2
+# define ENEMY_SPEED 0.05
+
+typedef enum	e_enemy_direction
+{
+	ENEMY_NORTH,
+	ENEMY_SOUTH,
+	ENEMY_WEST,
+	ENEMY_EAST
+}				t_enemy_direction;
+
 typedef struct	s_color
 {
 	int		r;
@@ -81,7 +94,7 @@ typedef struct	s_color
 	int		b;
 }				t_color;
 
-typedef struct s_mlx
+typedef struct	s_mlx
 {
 	void	*mlx;
 	void	*win;
@@ -93,7 +106,7 @@ typedef struct s_mlx
 	int		flag;
 	t_color	c_floor;
 	t_color	c_ceiling;
-} t_mlx;
+}				t_mlx;
 
 typedef struct s_fov
 {
@@ -117,6 +130,10 @@ typedef struct s_map
 	int		minimap_bpp;
 	int		minimap_line_len;
 	int		minimap_endian;
+	int		border_size;
+	int		border_color;
+	int		hit_wall_x;
+	int		hit_wall_y;
 	t_fov	fov;
 } t_map;
 
@@ -170,28 +187,39 @@ typedef struct s_dda
 
 typedef struct	s_sprite
 {
+	int		**pixels;
 	char	*path;
+	char	*addr;
 	void	*img;
-	int		*addr;
 	int		bpp;
 	int		width;
 	int		height;
+	int		line_len;
 	int		endian;
 }				t_sprite;
 
 typedef struct	s_tex
 {
-	t_sprite	north;
-	t_sprite	south;
-	t_sprite	west;
-	t_sprite	east;
+	t_sprite	sprite[4];
 	int			x;
 	int			y;
-	int			direction;
+	int			sideHit;
 	int			color;
 	double		step;
 	double		tex_pos;
 }				t_tex;
+
+typedef struct	s_enemy
+{
+	double				x;
+	double				y;
+	double				animation_speed;
+	double				animation_timer;
+	int					animation_state;
+	int					animation_frame;
+	t_enemy_direction	direction;
+	t_sprite			walking[4][9];
+}				t_enemy;
 
 //singleton
 
@@ -200,7 +228,8 @@ t_map		*_map(void);
 t_player	*_player(void);
 t_dda		*_dda(void);
 t_ray		*_ray(void);
-t_tex	*_tex(void);
+t_tex		*_tex(void);
+t_enemy		*_enemy(void);
 
 //tools
 
@@ -209,15 +238,15 @@ int		get_height(int fd);
 void	wall_height(void);
 void	draw_wall(int x, int start, int end);
 void	refresh_image(void);
-int		calculate_rgb(t_color color);
-int 	calculate_trgb(int t, int r, int g, int b);
+int		calculate_color(t_color color);
+int		calculate_rgb(unsigned char r, unsigned char g, unsigned char b);
 void	calculate_y_tex(void);
-void	match_color_tex(void);
+void	match_color_tex(int y);
 void	draw_square(int x, int y, int color);
 
 //map
 
-int	parse_map(int fd);
+int		parse_map(int fd);
 
 //free
 
@@ -258,10 +287,22 @@ int		close_window(void);
 
 void	load_sprites(void);
 void	calculate_sprite(void);
+int		get_color(double y);
+void	sprite_put_pixel(int x, int y, int color);
 
 //minimap
 
 void	draw_minimap(void);
 void	highlight_block_border(void);
+
+//enemy
+
+void	update_enemy_direction(void);
+void	update_enemy_animation(void);
+void	move_enemy_towards_player(void);
+void	spawn_enemy_opposite_player(void);
+void	draw_enemy_sprite(void);
+void	load_walk(void);
+void	draw_enemy_sprite(void);
 
 #endif

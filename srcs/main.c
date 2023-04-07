@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:35:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/22 12:37:41 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/01 15:56:14 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv)
 	map->map = ft_calloc(map->height, sizeof(char *));
 	parse_map(map->fd);
 	get_player_data();
+	spawn_enemy_opposite_player();
 	ptr->mlx = mlx_init();
 	ptr->win = mlx_new_window(ptr->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	ptr->img = mlx_new_image(ptr->mlx, WIN_WIDTH, WIN_HEIGHT);

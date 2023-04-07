@@ -1,6 +1,6 @@
 import os
 
-INPUT_FILENAME = "test"
+INPUT_FILENAME = "half_wall.xpm"
 OUTPUT_FILENAME = "output"
 LINE_LENGTH = 32
 NUM_LINES = 32
