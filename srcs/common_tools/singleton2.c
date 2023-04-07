@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singleton2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:58:06 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/23 17:44:33 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:25:43 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ t_texture	*_texture(void)
 	{
 		init++;
 		ft_bzero(&texture, sizeof(t_texture));
-		texture.east.path = "./texture_XPM/eagle.xpm";
-		texture.west.path = "./texture_XPM/brick.xpm";
-		texture.north.path = "./texture_XPM/blueWall.xpm";
-		texture.south.path = "./texture_XPM/brick.xpm";
 	}
 	return (&texture);
 }

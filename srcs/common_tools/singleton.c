@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   singleton.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:48:56 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/20 17:13:24 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:29:38 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_mlx	*_mlx(void)
 	{
 		init++;
 		ft_bzero(&mlx, sizeof(t_mlx));
+		ft_bzero(&mlx.c_ceiling, sizeof(t_color));
+		ft_bzero(&mlx.c_floor, sizeof(t_color));
 	}
 	return (&mlx);
 }

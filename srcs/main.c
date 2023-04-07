@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:35:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/24 18:25:12 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/06 18:38:53 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,13 @@
 
 int main(int argc, char **argv)
 {
-	// Initialize variables and create window
 	t_mlx *ptr = _mlx();
-	// t_map *map = _map();
 
 	if (argc != 2)
-	{
-		dprintf(2, "Error\nWrong number of arguments\n");
-		exit(1);
-	}
+		handling_error("wrong number of arguments", NULL);
 	printf("1\n");
-	get_map(argv);
+	parsing(argv);
 	printf("2\n");
-	// map->path = ft_strdup(argv[1]);
-	// map->fd = open(map->path, O_RDONLY);
-	// map->height = get_height(map->fd);
-	// map->map = ft_calloc(map->height, sizeof(char *));
-	// parse_map(map->fd);
 	printf("3\n");
 	get_player_data();
 	printf("4\n");
@@ -49,7 +39,6 @@ int main(int argc, char **argv)
 	_map()->minimap_addr = (int *)mlx_get_data_addr(_map()->minimap_img, &_map()->minimap_bpp,
 		&_map()->minimap_line_len, &_map()->minimap_endian);
 	printf("9\n");
-	// Hook close event and start main loop
 	hook();
 	printf("10\n");
 	mlx_loop(ptr->mlx);

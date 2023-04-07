@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 12:45:04 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/02/07 10:20:02 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/05 18:26:15 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include <strings.h>
 
-# define BUFFER_SIZE 1000000
+# define BUFFER_SIZE 1
 # define C_RESET "\e[0m"
 # define C_PURPLE "\e[34m"
 # define C_RED "\e[31m"
@@ -67,7 +67,7 @@ char	*ft_strndup_gnl(const char *s, int n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim(char *s1, char const *set, int flag);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_char(char *str, char c);
 char	*ft_strrchr(const char *s, int c);

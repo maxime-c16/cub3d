@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/03/06 18:08:00 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/05 19:11:19 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@
 
 # endif
 
-# define SUCCESS 1
-# define FAILURE -1
+# define TRUE 1
+# define FALSE 0
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
@@ -86,6 +86,7 @@ typedef struct	s_color
 	int		r;
 	int		g;
 	int		b;
+	int		filled;
 }				t_color;
 
 typedef struct s_mlx
@@ -120,6 +121,7 @@ typedef struct s_map
 	int		minimap_line_len;
 	int		*minimap_addr;
 	double	minimap_scale;
+	char	*line;
 	char	*path;
 	char	**map;
 	void	*minimap_img;
@@ -221,15 +223,31 @@ void	calculate_y_texture(void);
 void	match_color_tex(void);
 void	draw_square(int x, int y, int color);
 
-//map
+//parsing
 
-void	get_map(char **av);
+int		skip_space(char *line);
+int 	is_empty_line(char *line);
+int		is_game_param(char *line);
+int 	check_param_filled(void);
+void	check_invalid_char(char *line);
+void	check_map_closed(void);
+void	check_nb_player(void);
+void	open_file(char **av);
+void 	skip_to_map(int fd);
+void	parsing(char **av);
+void	parse_map(char **av);
+void	parse_file(char **av);
+void	parse_texture_north(char *line);
+void	parse_texture_south(char *line);
+void	parse_texture_west(char *line);
+void	parse_texture_east(char *line);
+void	parse_color(char *line, t_color *color);
 
 //free
 
 void	free_array(char **array);
-void	hasta_la_vista(void);
-void	handling_error(char *error_msg);
+void	hasta_la_vista(int status);
+void	handling_error(char *error_msg, char *arg);
 
 //render
 

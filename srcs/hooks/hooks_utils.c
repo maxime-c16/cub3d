@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:32:42 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/28 17:49:22 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/03/21 19:42:48 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	close_window(void)
 {
-	hasta_la_vista();
+	hasta_la_vista(EXIT_SUCCESS);
 	return (0);
 }
 

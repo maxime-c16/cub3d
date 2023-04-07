@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:28:51 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/27 13:35:07 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:53:27 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	load_sprites(void)
 	texture->east.img = mlx_xpm_file_to_image(_mlx()->mlx, texture->east.path, &texture->east.width, &texture->east.height);
 	texture->west.img = mlx_xpm_file_to_image(_mlx()->mlx, texture->west.path, &texture->west.width, &texture->west.height);
 	if (!texture->north.img || !texture->south.img || !texture->east.img || !texture->west.img)
-		hasta_la_vista();
+		handling_error("an image could not be mounted", NULL);
 	texture->north.addr = (int *)mlx_get_data_addr(texture->north.img, &texture->north.bpp, &texture->north.width, &texture->north.endian);
 	texture->south.addr = (int *)mlx_get_data_addr(texture->south.img, &texture->south.bpp, &texture->south.width, &texture->south.endian);
 	texture->east.addr = (int *)mlx_get_data_addr(texture->east.img, &texture->east.bpp, &texture->east.width, &texture->east.endian);
 	texture->west.addr = (int *)mlx_get_data_addr(texture->west.img, &texture->west.bpp, &texture->west.width, &texture->west.endian);
 	if (!texture->north.addr || !texture->south.addr || !texture->east.addr || !texture->west.addr)
-		hasta_la_vista();
+		handling_error("retour a l'expediteur", NULL);
 }
 
 static void	calculate_new_wall_x(t_dda *dda)

@@ -6,22 +6,28 @@ SRCS	=	srcs/dda/dda_utils.c \
 			srcs/hooks/keyhooks_utils.c \
 			srcs/hooks/keyhooks.c \
 			srcs/sprites/sprites.c \
-			srcs/free.c \
-			srcs/get_map.c \
-			srcs/handling_error.c \
+			srcs/parsing/parse_color.c \
+			srcs/parsing/parse_file.c \
+			srcs/parsing/parse_map.c \
+			srcs/parsing/parse_textures.c \
+			srcs/parsing/parsing.c \
+			srcs/parsing/tools/parse_check.c \
+			srcs/parsing/tools/parse_utils.c \
+			srcs/common_tools/free.c \
+			srcs/common_tools/handling_error.c \
+			srcs/common_tools/singleton.c \
+			srcs/common_tools/singleton2.c \
+			srcs/common_tools/tools.c \
+			srcs/common_tools/tools2.c \
 			srcs/main.c \
 			srcs/minimap.c \
 			srcs/player.c \
-			srcs/singleton.c \
-			srcs/singleton2.c \
-			srcs/tools.c \
-			srcs/tools2.c \
 
 INC		=	includes/cub3d.h
 
 CC		=	gcc
 
-CFLAGS	=	-Wall -Wextra -Werror -g3 -I includes/ 
+CFLAGS	=	-Wall -Wextra -Werror -g3 -I includes/
 
 MLX		=	mlx_Linux
 

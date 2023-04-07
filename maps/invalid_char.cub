@@ -4,7 +4,7 @@ EA ./texture_XPM/blueWall.xpm
 SO ./texture_XPM/eagle.xpm
 
 
-F 240, 0, 
+F 240, 0, 210
 C  0, 96, 253
 
          111111111111111111111111

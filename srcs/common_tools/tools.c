@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:31:23 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/29 23:55:33 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/06 17:10:25 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,30 @@ void	ft_print_map(void)
 
 int	get_height(int fd)
 {
-	char	*line;
-	int		height;
 	int		i;
+	t_map	*map;
 
-	height = 0;
 	i = 0;
-	line = get_next_line(fd);
-	while (line)
+	map = _map();
+	skip_to_map(fd);
+	while (map->line)
 	{
 		i = 0;
-		while (line[i] && (line[i] == ' ' || line[i] == '1'))
+		while (map->line[i] && (map->line[i] == '\t' || map->line[i] == VOID
+				|| map->line[i] == WALL || map->line[i] == '0'))
 		{
-			if (line[i] == '1')
+			if (map->line[i] == '1')
 			{
-				height++;
+				map->height++;
 				break ;
 			}
 			i++;
 		}
-		free(line);
-		line = get_next_line(fd);
+		free(map->line);
+		map->line = get_next_line(fd);
 	}
 	close(fd);
-	return (height);
+	return (map->height);
 }
 
 void	wall_height(void)
