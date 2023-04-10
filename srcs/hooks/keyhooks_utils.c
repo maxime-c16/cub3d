@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:47:32 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/01 14:32:15 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/08 19:11:37 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	rotate_left(void)
 {
 	t_player	*ptr;
-	double	old_dir_x;
-	double	old_plane_x;
+	double		old_dir_x;
+	double		old_plane_x;
 
 	ptr = _player();
 	old_dir_x = ptr->dir_x;
@@ -30,8 +30,8 @@ void	rotate_left(void)
 void	rotate_right(void)
 {
 	t_player	*ptr;
-	double	old_dir_x;
-	double	old_plane_x;
+	double		old_dir_x;
+	double		old_plane_x;
 
 	ptr = _player();
 	old_dir_x = ptr->dir_x;

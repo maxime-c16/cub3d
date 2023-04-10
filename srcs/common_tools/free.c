@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 20:12:14 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/08 18:16:39 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	hasta_la_vista(int status)
 			destroy_minimap(mlx->mlx);
 		mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
-		mlx_destroy_display(mlx->mlx);
+		// mlx_destroy_display(mlx->mlx);
 		free(mlx->mlx);
 	}
 	exit(status);

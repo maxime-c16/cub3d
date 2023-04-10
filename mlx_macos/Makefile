@@ -9,13 +9,24 @@ OBJ=$(OBJ1:.m=.o)
 CFLAGS+=-O2
 
 # add to match string put with X11 in size and position
-CFLAGS+= -DSTRINGPUTX11 -g3
+CFLAGS+= -DSTRINGPUTX11
+CFLAGS += -Wno-unused-variable -Wno-unused-parameter
+CFLAGS+= -DGL_SILENCE_DEPRECATION
+
 
 all: $(NOM)
 
 $(NOM):	$(OBJ)
-	ar -r $(NOM) $(OBJ)
-	ranlib $(NOM)
+	@ar -r $(NOM) $(OBJ)
+	@ranlib $(NOM)
+
+%.o: %.c
+	@echo "mlx : Compiling $(notdir $<)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.m
+	@echo "mlx : Compiling $(notdir $<)"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(NOM) $(OBJ) *~

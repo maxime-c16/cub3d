@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 19:31:26 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 18:54:09 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/08 19:17:29 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,31 @@ static double	get_player_angle(char c)
 	return (0);
 }
 
+
 static void set_plane(void)
 {
 	t_player	*player;
 
 	player = _player();
-	if (_map()->map[(int)player->y][(int)player->x] == 'N')
-	{
-		player->plane_x = 0.66;
-		player->plane_y = 0;
-	}
-	else if (_map()->map[(int)player->y][(int)player->x] == 'S')
-	{
-		player->plane_x = -0.66;
-		player->plane_y = 0;
-	}
-	else if (_map()->map[(int)player->y][(int)player->x] == 'E')
+
+	if (player->dir_x == 1 && player->dir_y == 0) // Facing East
 	{
 		player->plane_x = 0;
 		player->plane_y = 0.66;
 	}
-	else if (_map()->map[(int)player->y][(int)player->x] == 'W')
+	else if (player->dir_x == -1 && player->dir_y == 0) // Facing West
 	{
 		player->plane_x = 0;
 		player->plane_y = -0.66;
 	}
+	else
+	{
+		double angle = player->angle + M_PI / 2;
+		player->plane_x = cos(angle) * 0.66;
+		player->plane_y = sin(angle) * 0.66;
+	}
 }
+
 
 static void	setPlayer(double x, double y, double angle)
 {
@@ -85,6 +84,7 @@ void	get_player_data(void)
 				map->map[i][j] == 'E' || map->map[i][j] == 'W')
 			{
 				setPlayer(j + 0.5, i + 0.5, get_player_angle(map->map[i][j]));
+				map->map[i][j] = '0';
 				return ;
 			}
 			j++;

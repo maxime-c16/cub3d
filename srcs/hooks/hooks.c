@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:51:42 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 19:12:05 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/09 15:44:28 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,6 @@ int	key_down(int keycode)
 		rotate_left();
 	if (keycode == KEY_RIGHT)
 		rotate_right();
-	// if (keycode == KEY_E)
-	// 	create_wall();
-	// if (keycode == KEY_R)
-	// 	delete_wall();
 	return (0);
 }
 

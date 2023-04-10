@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:33:47 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/01 17:08:27 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/08 18:22:49 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,5 @@ void	draw_minimap(void)
 		j++;
 	}
 	draw_circle((int)_player()->x * MMAP_L, (int)_player()->y * MMAP_L);
-	draw_fov((int)_player()->x * MMAP_L, (int)_player()->y * MMAP_L);
-	draw_circle((int)_enemy()->x * MMAP_L, (int)_enemy()->y * MMAP_L);
+	// draw_fov((int)_player()->x * MMAP_L, (int)_player()->y * MMAP_L);
 }

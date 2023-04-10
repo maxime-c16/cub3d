@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:01:25 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/07 19:08:54 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/08 18:30:39 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../../includes/cub3d.h"
 
 int	check_param_filled(void)
 {

@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 18:37:09 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/01 17:05:22 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 17:14:32 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,26 @@ void	calculate_y_tex(void)
 	tex->tex_pos += tex->step;
 }
 
-void	match_color_tex(int y)
+// void	match_color_tex(int y)
+// {
+// 	t_dda		*dda;
+// 	t_tex	*tex;
+
+// 	dda = _dda();
+// 	tex = _tex();
+// 	tex->color = tex->sprite[(int)dda->sideHit].pixels[y][tex->x];
+// 	if (dda->side == 1)
+// 		tex->color = (tex->color >> 1) & 8355711;
+// }
+
+void	match_color_tex(void)
 {
 	t_dda		*dda;
 	t_tex	*tex;
 
 	dda = _dda();
 	tex = _tex();
-	tex->color = tex->sprite[(int)dda->sideHit].pixels[y][tex->x];
+	tex->color = tex->sprite[(int)dda->sideHit].addr[tex->y * tex->sprite[(int)dda->sideHit].width / 4 + tex->x];
 	if (dda->side == 1)
 		tex->color = (tex->color >> 1) & 8355711;
 }
@@ -89,7 +101,7 @@ int lerp(int a, int b, float t)
 	return ((r << 16) | (g << 8) | c);
 }
 
-int get_color(double y)
+void	get_color(double y, int x, int y_tex)
 {
 	t_ray	*ray;
 	t_dda	*dda;
@@ -99,9 +111,9 @@ int get_color(double y)
 	ray = _ray();
 	dda = _dda();
 	border_distance = -1;
-	_map()->border_size = 3; // Adjust this value to control the border thickness
+	_map()->border_size = 3;
 	_tex()->x = (int)(ray->wallX * (double)_tex()->sprite[(int)dda->sideHit].width);
-	if ((!dda->side && ray->ray_dir_x > 0) || (dda->side && ray->ray_dir_y < 0))
+	if ((dda->side == NORTH_SOUTH && ray->ray_dir_x > 0) || (dda->side == WEST_EAST && ray->ray_dir_y < 0))
 		_tex()->x = _tex()->sprite[(int)dda->sideHit].width - _tex()->x - 1;
 	color = pick_sprite()[(int)y][_tex()->x];
 	if ((int)y < _map()->border_size)
@@ -111,19 +123,19 @@ int get_color(double y)
 	if (_tex()->x < _map()->border_size)
 	{
 		if (_tex()->x < border_distance || border_distance == -1)
-		border_distance = _tex()->x;
+			border_distance = _tex()->x;
 	}
 	else if (_tex()->x >= _tex()->sprite[(int)dda->sideHit].width - _map()->border_size)
 	{
 		if (_tex()->sprite[(int)dda->sideHit].width - _tex()->x - 1 < border_distance || border_distance == -1)
 			border_distance = _tex()->sprite[(int)dda->sideHit].width - _tex()->x - 1;
 	}
-	if (border_distance != -1 && _map()->hit_wall_x == dda->mapX && _map()->hit_wall_y == dda->mapY)
-	{
-		color = lerp(color,  calculate_rgb(255, 255, 255),
-			(float)(_map()->border_size - border_distance) / _map()->border_size);
-	}
-	return color;
+	// if (border_distance != -1 && _map()->hit_wall_x == dda->mapX && _map()->hit_wall_y == dda->mapY)
+	// {
+	// 	color = lerp(color,  calculate_rgb(255, 255, 255),
+	// 		(float)(_map()->border_size - border_distance) / _map()->border_size);
+	// }
+	sprite_put_pixel(x, y_tex, color);
 }
 
 void	draw_square(int x, int y, int color)

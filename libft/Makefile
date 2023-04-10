@@ -6,7 +6,7 @@
 #    By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 17:39:45 by mcauchy           #+#    #+#              #
-#    Updated: 2023/04/01 17:24:47 by mcauchy          ###   ########.fr        #
+#    Updated: 2023/04/08 18:18:29 by mcauchy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,12 +33,7 @@ CFLAGS			=	-Wall -Wextra -Werror -g3
 
 HEADER			=	../includes/libft.h
 
-TOTAL_FILES		=	$(words $(SRCS))
-
-CURRENT_FILE	=	0
-
 all				:	$(NAME)
-					$(eval CURRENT_FILE=0)
 
 $(NAME)			:	$(OBJ)
 					@echo "libft: 100.00% complete"
@@ -47,10 +42,7 @@ $(NAME)			:	$(OBJ)
 
 $(DIR_OBJ)/%.o	:	%.c $(HEADER)
 					@mkdir -p $(@D)
-					@clear
-					@echo "Compiling $(notdir $<)..."
-					@echo "libft : $(shell echo "scale=2; $(CURRENT_FILE) / $(TOTAL_FILES) * 100" | bc)% complete"
-					@$(eval CURRENT_FILE=$(shell echo "$(CURRENT_FILE) + 1" | bc))
+					@echo "libft : Compiling $(notdir $<)..."
 					@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean			:

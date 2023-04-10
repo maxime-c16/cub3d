@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 18:58:37 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/09 16:33:48 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ void	refresh_image(void);
 int		calculate_color(t_color color);
 int		calculate_rgb(unsigned char r, unsigned char g, unsigned char b);
 void	calculate_y_tex(void);
-void	match_color_tex(int y);
+void	match_color_tex(void);
 void	draw_square(int x, int y, int color);
 
 //parsing
@@ -313,7 +313,7 @@ int		close_window(void);
 
 void	load_sprites(void);
 void	calculate_sprite(void);
-int		get_color(double y);
+void	get_color(double y, int x, int y_tex);
 void	sprite_put_pixel(int x, int y, int color);
 
 //minimap
