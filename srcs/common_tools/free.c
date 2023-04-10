@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/08 18:16:39 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 21:57:56 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,6 @@ void	free_array(char **array)
 		i++;
 	}
 	free(array);
-}
-
-void	free_pixels(int size, int **pixels)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		free(pixels[i]);
-		i++;
-	}
-	free(pixels);
 }
 
 void	destroy_minimap(void *mlx)
@@ -59,7 +46,6 @@ void	free_texs(void)
 	while (i < 4)
 	{	
 		free(tex->sprite[i].path);
-		free_pixels(tex->sprite[i].height, tex->sprite[i].pixels);
 		if (mlx->mlx && tex->sprite[i].img)
 			mlx_destroy_image(mlx->mlx, tex->sprite[i].img);
 		i++;

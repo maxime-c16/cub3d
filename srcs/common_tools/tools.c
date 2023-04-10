@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:31:23 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/09 16:53:01 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 21:37:209 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ int	get_height(int fd)
 	return (map->height);
 }
 
-void wall_height(void)
+void	wall_height(void)
 {
-	t_ray *ray;
-	t_dda *dda;
+	t_ray	*ray;
+	t_dda	*dda;
 
 	ray = _ray();
 	dda = _dda();
 	if (dda->side == NORTH_SOUTH)
-		dda->perpWallDist = dda->sideDistX - dda->deltaDistX;
+		ray->wallDist = dda->sideDistX - dda->deltaDistX;
 	else
-		dda->perpWallDist = dda->sideDistY - dda->deltaDistY;
-	ray->wall.height = (int)(WIN_HEIGHT / 1.5) / dda->perpWallDist;
+		ray->wallDist = dda->sideDistY - dda->deltaDistY;
+	ray->wall.height = (int)(WIN_HEIGHT / ray->wallDist);
 	ray->wall.start = -ray->wall.height / 2 + WIN_HEIGHT / 2;
 	if (ray->wall.start < 0)
 		ray->wall.start = 0;
@@ -90,35 +90,42 @@ void draw_minimap_on_top(int x)
 	}
 }
 
+static void	draw_no_pixel_put(int x, int y, int color)
+{
+	t_mlx	*mlx;
+
+	mlx = _mlx();
+	mlx->addr[y * mlx->line_len / 4 + x] = color;
+}
+
 void draw_wall(int x, int start, int end)
 {
 	t_mlx	*mlx;
-	double	j;
 	int		y;
 
 	y = 0;
 	mlx = _mlx();
-	_tex()->step = 1.0 * _tex()->sprite[(int)_dda()->sideHit].width / _ray()->wall.height;
-	j = (_tex()->step * (start - (WIN_HEIGHT / 2) + (_ray()->wall.height / 2)));
 	while (y < WIN_HEIGHT)
 	{
 		if (y < start)
 		{
 			if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
-				mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
+				draw_no_pixel_put(x, y,
+					(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
 			else
-				mlx->addr[y * mlx->line_len / 4 + x] = calculate_color(mlx->c_ceiling);
+				draw_no_pixel_put(x, y, calculate_color(mlx->c_ceiling));
 		}
 		else if (y >= start && y < end)
 		{
 			if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
-				mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
+				draw_no_pixel_put(x, y,
+					(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
 			else
-				get_color(j, x, y);
-			j += _tex()->step;
+				draw_no_pixel_put(x, y, match_color_tex());
+			_tex()->tex_pos += _tex()->step;
 		}
 		else
-			mlx->addr[y * mlx->line_len / 4 + x] = calculate_color(mlx->c_floor);
+			draw_no_pixel_put(x, y, calculate_color(mlx->c_floor));
 		y++;
 	}
 }

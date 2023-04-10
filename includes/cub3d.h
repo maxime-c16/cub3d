@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/09 16:33:48 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 21:40:01 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,6 @@ typedef struct s_dda
 
 typedef struct	s_sprite
 {
-	int		**pixels;
 	char	*path;
 	char	*addr;
 	void	*img;
@@ -250,7 +249,7 @@ void	refresh_image(void);
 int		calculate_color(t_color color);
 int		calculate_rgb(unsigned char r, unsigned char g, unsigned char b);
 void	calculate_y_tex(void);
-void	match_color_tex(void);
+int		match_color_tex(void);
 void	draw_square(int x, int y, int color);
 
 //parsing

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:29:01 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 18:51:20 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 22:11:58 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,4 @@ void	dda_loop(t_dda *dda)
 			dda->hit = 1;
 	}
 	set_dda_side();
-	if (dda->sideHit == NORTH_SOUTH)
-		_ray()->wallX = _player()->y + (dda->perpWallDist * _ray()->ray_dir_y);
-	else
-		_ray()->wallX = _player()->x + (dda->perpWallDist * _ray()->ray_dir_x);
-	_ray()->wallX -= floor(_ray()->wallX);
 }
