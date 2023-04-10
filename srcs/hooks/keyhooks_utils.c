@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyhooks_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:47:32 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/08 19:11:37 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 20:38:03 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@ void	rotate_left(void)
 	ptr = _player();
 	old_dir_x = ptr->dir_x;
 	old_plane_x = ptr->plane_x;
-	ptr->dir_x = (ptr->dir_x * cos(ptr->rot_speed)) - (ptr->dir_y * sin(ptr->rot_speed));
-	ptr->dir_y = (old_dir_x * sin(ptr->rot_speed)) + (ptr->dir_y * cos(ptr->rot_speed));
-	ptr->plane_x = (ptr->plane_x * cos(ptr->rot_speed)) - (ptr->plane_y * sin(ptr->rot_speed));
-	ptr->plane_y = (old_plane_x * sin(ptr->rot_speed)) + (ptr->plane_y * cos(ptr->rot_speed));
+	ptr->dir_x = (ptr->dir_x * cos(ptr->rot_speed))
+		- (ptr->dir_y * sin(ptr->rot_speed));
+	ptr->dir_y = (old_dir_x * sin(ptr->rot_speed))
+		+ (ptr->dir_y * cos(ptr->rot_speed));
+	ptr->plane_x = (ptr->plane_x * cos(ptr->rot_speed))
+		- (ptr->plane_y * sin(ptr->rot_speed));
+	ptr->plane_y = (old_plane_x * sin(ptr->rot_speed))
+		+ (ptr->plane_y * cos(ptr->rot_speed));
 }
 
 void	rotate_right(void)
@@ -36,10 +40,14 @@ void	rotate_right(void)
 	ptr = _player();
 	old_dir_x = ptr->dir_x;
 	old_plane_x = ptr->plane_x;
-	ptr->dir_x = ptr->dir_x * cos(-ptr->rot_speed) - ptr->dir_y * sin(-ptr->rot_speed);
-	ptr->dir_y = (old_dir_x * sin(-ptr->rot_speed)) + (ptr->dir_y * cos(-ptr->rot_speed));
-	ptr->plane_x = ptr->plane_x * cos(-ptr->rot_speed) - ptr->plane_y * sin(-ptr->rot_speed);
-	ptr->plane_y = (old_plane_x * sin(-ptr->rot_speed)) + (ptr->plane_y * cos(-ptr->rot_speed));
+	ptr->dir_x = ptr->dir_x * cos(-ptr->rot_speed)
+		- ptr->dir_y * sin(-ptr->rot_speed);
+	ptr->dir_y = (old_dir_x * sin(-ptr->rot_speed))
+		+ (ptr->dir_y * cos(-ptr->rot_speed));
+	ptr->plane_x = ptr->plane_x * cos(-ptr->rot_speed)
+		- ptr->plane_y * sin(-ptr->rot_speed);
+	ptr->plane_y = (old_plane_x * sin(-ptr->rot_speed))
+		+ (ptr->plane_y * cos(-ptr->rot_speed));
 }
 
 int check_wall(double x, double y)

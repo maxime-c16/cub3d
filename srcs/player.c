@@ -3,68 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 19:31:26 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/08 19:17:29 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 19:41:333 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static double	get_player_angle(char c)
-{
-	if (c == 'N')
-		return (M_PI / 2);
-	else if (c == 'S')
-		return (3 * M_PI / 2);
-	else if (c == 'E')
-		return (0);
-	else if (c == 'W')
-		return (M_PI);
-	return (0);
-}
-
-
-static void set_plane(void)
+static void set_player_angle(double dir_x, double dir_y, double p_x, double p_y)
 {
 	t_player	*player;
 
 	player = _player();
-
-	if (player->dir_x == 1 && player->dir_y == 0) // Facing East
-	{
-		player->plane_x = 0;
-		player->plane_y = 0.66;
-	}
-	else if (player->dir_x == -1 && player->dir_y == 0) // Facing West
-	{
-		player->plane_x = 0;
-		player->plane_y = -0.66;
-	}
-	else
-	{
-		double angle = player->angle + M_PI / 2;
-		player->plane_x = cos(angle) * 0.66;
-		player->plane_y = sin(angle) * 0.66;
-	}
+	player->dir_x = dir_x;
+	player->dir_y = dir_y;
+	player->plane_x = p_x;
+	player->plane_y = p_y;
 }
 
+static void	get_player_angle(char c)
+{
+	if (c == 'N')
+		set_player_angle(0, -1, 0.66, 0);
+	else if (c == 'S')
+		set_player_angle(0, 1, -0.66, 0);
+	else if (c == 'E')
+		set_player_angle(1, 0, 0, 0.66);
+	else if (c == 'W')
+		set_player_angle(-1, 0, 0, -0.66);
+}
 
-static void	setPlayer(double x, double y, double angle)
+static void	setPlayer(double x, double y)
 {
 	t_player	*player;
 
 	player = _player();
 	player->x = x;
 	player->y = y;
-	player->dir_x = cos(angle);
-	player->dir_y = sin(angle);
-	player->angle = angle;
 	player->fov = M_PI / 3;
-	player->speed = 0.1;
-	player->rot_speed = M_PI / 40;
-	set_plane();
+	player->speed = 0.07;
+	player->rot_speed = -M_PI / 80;
 }
 
 void	get_player_data(void)
@@ -83,7 +63,8 @@ void	get_player_data(void)
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S' ||
 				map->map[i][j] == 'E' || map->map[i][j] == 'W')
 			{
-				setPlayer(j + 0.5, i + 0.5, get_player_angle(map->map[i][j]));
+				get_player_angle(map->map[i][j]);
+				setPlayer(j + 0.5, i + 0.5);
 				map->map[i][j] = '0';
 				return ;
 			}

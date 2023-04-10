@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyhooks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:42:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/01/27 13:26:00 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/10 20:36:45 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	move_left(void)
 	ptr = _player();
 	if (!check_wall(ptr->x + ptr->dir_y * ptr->speed, ptr->y - ptr->dir_x * ptr->speed))
 	{
-		ptr->y += ptr->dir_x * ptr->speed;
-		ptr->x -= ptr->dir_y * ptr->speed;
+		ptr->y -= ptr->plane_x * ptr->speed;
+		ptr->x -= ptr->plane_y * ptr->speed;
 	}
 }
 
@@ -55,7 +55,7 @@ void	move_right(void)
 	ptr = _player();
 	if (!check_wall(ptr->x - ptr->dir_y * ptr->speed, ptr->y + ptr->dir_x * ptr->speed))
 	{
-		ptr->y -= ptr->dir_x * ptr->speed;
-		ptr->x += ptr->dir_y * ptr->speed;
+		ptr->y += ptr->plane_x * ptr->speed;
+		ptr->x += ptr->plane_y * ptr->speed;
 	}
 }
