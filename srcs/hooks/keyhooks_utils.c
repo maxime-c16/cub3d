@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyhooks_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:47:32 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 20:38:03 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 14:18:14 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int check_wall(double x, double y)
 		return (1);
 	if (_map()->map[(int)y][(int)(x - half_width)] == '1')
 		return (1);
-
 	return (0);
 }
 

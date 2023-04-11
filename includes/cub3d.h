@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 21:40:01 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 13:47:39 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ typedef struct s_dda
 	double	sideDistY;
 	double	deltaDistX;
 	double	deltaDistY;
-	double	perpWallDist;
 	double	stepX;
 	double	stepY;
 	double	hit;
@@ -197,7 +196,7 @@ typedef struct s_dda
 typedef struct	s_sprite
 {
 	char	*path;
-	char	*addr;
+	int		*addr;
 	void	*img;
 	int		bpp;
 	int		width;

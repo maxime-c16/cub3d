@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:29:01 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 22:11:58 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 12:43:45 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static void	init_dda_x(double posX, double rayDirX)
 	if (rayDirX < 0)
 	{
 		dda->stepX = -1;
-		dda->sideDistX = (posX - dda->mapX) * dda->deltaDistX;
+		dda->sideDistX = (posX - dda->mapX)
+			* dda->deltaDistX;
 	}
 	else
 	{
 		dda->stepX = 1;
-		dda->sideDistX = (dda->mapX + 1.0 - posX) * dda->deltaDistX;
+		dda->sideDistX = (dda->mapX + 1.0 - posX)
+			* dda->deltaDistX;
 	}
 }
 
@@ -55,12 +57,14 @@ static void	init_dda_y(double posY, double rayDirY)
 	if (rayDirY < 0)
 	{
 		dda->stepY = -1;
-		dda->sideDistY = (posY - dda->mapY) * dda->deltaDistY;
+		dda->sideDistY = (posY - dda->mapY)
+			* dda->deltaDistY;
 	}
 	else
 	{
 		dda->stepY = 1;
-		dda->sideDistY = (dda->mapY + 1.0 - posY) * dda->deltaDistY;
+		dda->sideDistY = (dda->mapY + 1.0 - posY)
+			* dda->deltaDistY;
 	}
 }
 
@@ -83,15 +87,15 @@ void	dda_loop(t_dda *dda)
 	{
 		if (dda->sideDistX < dda->sideDistY)
 		{
-			dda->sideDistX += dda->deltaDistX;
-			dda->mapX += dda->stepX;
 			dda->side = NORTH_SOUTH;
+			dda->mapX += dda->stepX;
+			dda->sideDistX += dda->deltaDistX;
 		}
 		else
 		{
-			dda->sideDistY += dda->deltaDistY;
-			dda->mapY += dda->stepY;
 			dda->side = WEST_EAST;
+			dda->mapY += dda->stepY;
+			dda->sideDistY += dda->deltaDistY;
 		}
 		if (dda->mapX < 0 || dda->mapY < 0 || dda->mapX >= _map()->width
 			|| dda->mapY >= _map()->height)

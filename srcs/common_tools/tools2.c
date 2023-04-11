@@ -35,7 +35,6 @@ void	calculate_y_tex(void)
 
 	tex = _tex();
 	tex->y = (int)tex->tex_pos & (tex->sprite[(int)_dda()->sideHit].height - 1);
-	// printf("data: tex->y = %d, tex->tex_pos = %f, tex->sprite[(int)_dda()->sideHit].height = %d\n", tex->y, tex->tex_pos, tex->sprite[(int)_dda()->sideHit].height);
 }
 
 int	match_color_tex(void)
@@ -45,9 +44,8 @@ int	match_color_tex(void)
 
 	dda = _dda();
 	tex = _tex();
-	calculate_y_tex();
 	tex->color = tex->sprite[(int)dda->sideHit].addr[
-		tex->y * tex->sprite[(int)dda->sideHit].width / 4 + tex->x];
+		tex->y * (tex->sprite[(int)dda->sideHit].width / 4) + tex->x];
 	// if (dda->side == 1)
 	// 	tex->color = (tex->color >> 1) & 8355711;
 	return (tex->color);

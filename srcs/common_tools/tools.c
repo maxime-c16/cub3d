@@ -121,7 +121,10 @@ void draw_wall(int x, int start, int end)
 				draw_no_pixel_put(x, y,
 					(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
 			else
+			{
+				calculate_y_tex();
 				draw_no_pixel_put(x, y, match_color_tex());
+			}
 			_tex()->tex_pos += _tex()->step;
 		}
 		else

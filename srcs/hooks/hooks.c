@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:51:42 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 19:06:50 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 12:07:39 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int render_rays(void)
 			_map()->hit_wall_x = dda->mapX;
 			_map()->hit_wall_y = dda->mapY;
 		}
+		calculate_sprite();
 		draw_wall(x, _ray()->wall.start, _ray()->wall.end);
 		x++;
 	}

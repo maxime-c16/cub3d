@@ -49,60 +49,63 @@ void	load_sprites(void)
 		if (!tex->sprite[i].img)
 			handling_error("a memory allocation failed", NULL);
 		check_texture(tex->sprite[i].width, tex->sprite[i].height);
-		tex->sprite[i].addr = mlx_get_data_addr(tex->sprite[i].img,
-			&tex->sprite[i].bpp, &tex->sprite[i].line_len, &tex->sprite[i].endian);
+		tex->sprite[i].addr = (int *)mlx_get_data_addr(tex->sprite[i].img,
+			&tex->sprite[i].bpp, &tex->sprite[i].width, &tex->sprite[i].endian);
 		if (!tex->sprite[i].addr)
 			handling_error("a memory allocation failed", NULL);
 		i++;
 	}
 }
 
-void	calculate_wall_x(t_dda *dda)
+void	calculate_wall_x(void)
 {
 	t_ray		*ray;
 	t_player	*player;
+	t_dda		*dda;
 
 	ray = _ray();
+	dda = _dda();
 	player = _player();
-	if (dda->sideHit == NORTH_SOUTH)
+	if (dda->side == NORTH_SOUTH)
 		ray->wallX = player->y + (ray->wallDist * ray->ray_dir_y);
 	else
 		ray->wallX = player->x + (ray->wallDist * ray->ray_dir_x);
 	ray->wallX -= floor(ray->wallX);
 }
 
-void	step_wall(void)
+void	step_texture(void)
 {
 	t_ray	*ray;
 	t_tex	*tex;
 
 	ray = _ray();
 	tex = _tex();
-	tex->step = 1.0 * tex->sprite[(int)_dda()->sideHit].width / ray->wall.height;
+	tex->step = 1.0
+		* tex->sprite[(int)_dda()->sideHit].width / ray->wall.height;
 	tex->step /= 4;
+	tex->tex_pos = tex->step * (ray->wall.start - WIN_HEIGHT / 2
+			+ ray->wall.height / 2);
 }
 
-void calculate_tex_X(t_tex *tex, t_dda *dda)
+void calculate_tex_X(void)
 {
+	t_tex	*tex;
+	t_dda	*dda;
+	
+	tex = _tex();
+	dda = _dda();
 	tex->x = (int)(_ray()->wallX * (double)tex->sprite[(int)dda->sideHit].width);
-	if (dda->sideHit == NORTH_SOUTH && _ray()->ray_dir_x > 0)
+	if (dda->side == NORTH_SOUTH && _ray()->ray_dir_x > 0)
 		tex->x = tex->sprite[(int)dda->sideHit].width - tex->x - 1;
-	if (dda->sideHit == WEST_EAST && _ray()->ray_dir_y < 0)
+	if (dda->side == WEST_EAST && _ray()->ray_dir_y < 0)
 		tex->x = tex->sprite[(int)dda->sideHit].width - tex->x - 1;
 	tex->x /= 4;
 }
 
 void	calculate_sprite(void)
 {
-	t_tex	*tex;
-	t_dda	*dda;
-
-	tex = _tex();
-	dda = _dda();
-	tex->sideHit = dda->sideHit;
-	calculate_wall_x(dda);
-	calculate_tex_X(tex, dda);
-	step_wall();
-	tex->tex_pos = tex->step * (_ray()->wall.start - WIN_HEIGHT / 2
-			+ _ray()->wall.height / 2);
+	_tex()->sideHit = _dda()->sideHit;
+	calculate_wall_x();
+	calculate_tex_X();
+	step_texture();
 }
