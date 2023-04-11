@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:36:25 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 18:52:07 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 19:40:07 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	init_sprites(void)
 				tex->sprite[i].path, &tex->sprite[i].width,
 				&tex->sprite[i].height);
 		if (!tex->sprite[i].img)
-			handling_error("a memory allocation failed", NULL);
+			handling_error("mlx failed", NULL);
 		check_texture(tex->sprite[i].width, tex->sprite[i].height);
 		tex->sprite[i].addr = (int *)mlx_get_data_addr(tex->sprite[i].img,
 				&tex->sprite[i].bpp, &tex->sprite[i].width,
 				&tex->sprite[i].endian);
 		if (!tex->sprite[i].addr)
-			handling_error("a memory allocation failed", NULL);
+			handling_error("mlx failed", NULL);
 		i++;
 	}
 }

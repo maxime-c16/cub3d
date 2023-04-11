@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:01:25 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/11 18:52:06 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 19:20:40 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	check_nb_player(void)
 	i = 0;
 	nb_player = 0;
 	map = _map();
-	while (map->map[i])
+	while (map->map && map->map[i])
 	{
 		j = 0;
 		while (map->map[i][j])
