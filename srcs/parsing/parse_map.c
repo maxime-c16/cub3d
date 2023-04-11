@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:48:21 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/08 18:30:16 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 19:51:18 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	parse_map(char **av)
 		map->map[i] = ft_strtrim(map->map[i], "\n", 1);
 		if (!map->map[i])
 			handling_error("a memory allocation failed", NULL);
-		if (!map->map[i][0])
+		if (is_empty_line(map->map[i]))
 			handling_error("map cannot be seperate by empty line", NULL);
 		free(map->line);
 		map->line = get_next_line(map->fd);

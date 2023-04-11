@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:02:46 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/11 19:40:52 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 20:07:03 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	is_game_param(char *line)
 
 int	is_empty_line(char *line)
 {
-	if (ft_strcmp(line, "\n") == 0)
+	if (ft_strcmp(line, "\n") == 0 || ft_strlen(line + skip_space(line)) == 0)
 		return (TRUE);
 	return (FALSE);
 }
