@@ -87,7 +87,7 @@ void	step_texture(void)
 			+ ray->wall.height / 2);
 }
 
-void calculate_tex_X(void)
+void	calculate_tex_x(void)
 {
 	t_tex	*tex;
 	t_dda	*dda;
@@ -106,6 +106,6 @@ void	calculate_sprite(void)
 {
 	_tex()->sideHit = _dda()->sideHit;
 	calculate_wall_x();
-	calculate_tex_X();
+	calculate_tex_x();
 	step_texture();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 14:31:23 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 21:37:209 by lbisson          ###   ########.fr       */
+/*   Created: 2023/04/11 14:39:20 by mcauchy           #+#    #+#             */
+/*   Updated: 2023/04/11 14:42:19 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,20 @@ void	wall_height(void)
 		ray->wall.end = WIN_HEIGHT - 1;
 }
 
-
-void draw_minimap_on_top(int x)
+void	draw_minimap_on_top(int x)
 {
 	t_mlx	*mlx;
 	int		y;
 
 	mlx = _mlx();
-
-	for (y = 0; y < _map()->height * MMAP_L; y++)
+	y = 0;
+	while (y < _map()->height * MMAP_L)
 	{
 		if (x < _map()->width * MMAP_L)
-			mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
+			mlx->addr[y * mlx->line_len / 4 + x]
+				= (int)_map()->minimap_addr[y
+				* _map()->minimap_line_len / 4 + x];
+		y++;
 	}
 }
 
@@ -98,78 +100,53 @@ static void	draw_no_pixel_put(int x, int y, int color)
 	mlx->addr[y * mlx->line_len / 4 + x] = color;
 }
 
-void draw_wall(int x, int start, int end)
+static void	draw_wall_ceil_floor(int x, int y)
 {
 	t_mlx	*mlx;
-	int		y;
 
-	y = 0;
 	mlx = _mlx();
-	while (y < WIN_HEIGHT)
+	if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
 	{
-		if (y < start)
-		{
-			if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
-				draw_no_pixel_put(x, y,
-					(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
-			else
-				draw_no_pixel_put(x, y, calculate_color(mlx->c_ceiling));
-		}
-		else if (y >= start && y < end)
-		{
-			if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
-				draw_no_pixel_put(x, y,
-					(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
-			else
-			{
-				calculate_y_tex();
-				draw_no_pixel_put(x, y, match_color_tex());
-			}
-			_tex()->tex_pos += _tex()->step;
-		}
-		else
-			draw_no_pixel_put(x, y, calculate_color(mlx->c_floor));
-		y++;
+		draw_no_pixel_put(x, y,
+			(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
+	}
+	else
+	{
+		draw_no_pixel_put(x, y, calculate_color(mlx->c_ceiling));
 	}
 }
 
-// void	draw_wall(int x, int start, int end)
-// {
-// 	t_mlx	*mlx;
-// 	int		y;
+static void	draw_wall_textured(int x, int y)
+{
+	if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
+	{
+		draw_no_pixel_put(x, y,
+			(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
+	}
+	else
+	{
+		calculate_y_tex();
+		draw_no_pixel_put(x, y, match_color_tex());
+	}
+	_tex()->tex_pos += _tex()->step;
+}
 
-// 	y = 0;
-// 	mlx = _mlx();
-// 	while (y < start)
-// 	{
-// 		if (y < _map()->height * MMAP_L
-// 			&& x < _map()->width * MMAP_L)
-// 			mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
-// 		else
-// 			mlx->addr[y * mlx->line_len / 4 + x] = calculate_color(mlx->c_ceiling);
-// 		y++;
-// 	}
-// 	while (y < end)
-// 	{
-// 		calculate_y_tex();
-// 		match_color_tex();
-// 		if (y < _map()->height * MMAP_L
-// 			&& x < _map()->width * MMAP_L)
-// 			mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
-// 		else
-// 			mlx->addr[y * mlx->line_len / 4 + x] = _tex()->color;
-// 		y++;
-// 	}
-// 	while (y < WIN_HEIGHT)
-// 	{
-// 		if (y < _map()->height * MMAP_L
-// 			&& x < _map()->width * MMAP_L)
-// 			mlx->addr[y * mlx->line_len / 4 + x] = (int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x];
-// 		else
-// 			mlx->addr[y * mlx->line_len / 4 + x] = calculate_color(mlx->c_floor);
-// 		y++;
-// 	}
-// }
+void	draw_wall(int x, int start, int end)
+{
+	int	y;
+
+	y = 0;
+	while (y < WIN_HEIGHT)
+	{
+		if (y < start)
+			draw_wall_ceil_floor(x, y);
+		else if (y >= start && y < end)
+			draw_wall_textured(x, y);
+		else
+			draw_wall_ceil_floor(x, y);
+		y++;
+	}
+}
 
 void	refresh_image(void)
 {
@@ -182,10 +159,11 @@ void	refresh_image(void)
 	mlx_destroy_image(mlx->mlx, map->minimap_img);
 	mlx->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
 	map->minimap_img = mlx_new_image(mlx->mlx, map->width * MMAP_L,
-		map->height * MMAP_L);
+			map->height * MMAP_L);
 	mlx->addr = (int *)mlx_get_data_addr(mlx->img, &mlx->bpp,
 			&mlx->line_len, &mlx->endian);
-	map->minimap_addr = (int *)mlx_get_data_addr(map->minimap_img, &map->minimap_bpp,
+	map->minimap_addr
+		= (int *)mlx_get_data_addr(map->minimap_img, &map->minimap_bpp,
 			&map->minimap_line_len, &map->minimap_endian);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }

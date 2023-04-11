@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 18:37:09 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 21:50:005 by lbisson          ###   ########.fr       */
+/*   Created: 2023/04/11 14:43:09 by mcauchy           #+#    #+#             */
+/*   Updated: 2023/04/11 14:44:32 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	calculate_color(t_color color)
 	return ((r << 16) | (g << 8) | b);
 }
 
-int calculate_rgb(unsigned char r, unsigned char g, unsigned char b)
+int	calculate_rgb(unsigned char r, unsigned char g, unsigned char b)
 {
 	return ((r << 16) | (g << 8) | b);
 }
@@ -39,19 +39,17 @@ void	calculate_y_tex(void)
 
 int	match_color_tex(void)
 {
-	t_dda		*dda;
+	t_dda	*dda;
 	t_tex	*tex;
 
 	dda = _dda();
 	tex = _tex();
 	tex->color = tex->sprite[(int)dda->sideHit].addr[
 		tex->y * (tex->sprite[(int)dda->sideHit].width / 4) + tex->x];
-	// if (dda->side == 1)
-	// 	tex->color = (tex->color >> 1) & 8355711;
 	return (tex->color);
 }
 
-int lerp(int a, int b, float t)
+int	lerp(int a, int b, float t)
 {
 	int	r;
 	int	g;
@@ -77,7 +75,8 @@ void	draw_square(int x, int y, int color)
 		i = 0;
 		while (i < MMAP_L)
 		{
-			map->minimap_addr[(y + j) * map->minimap_line_len / 4 + (x + i)] = color;
+			map->minimap_addr[(y + j)
+				* map->minimap_line_len / 4 + (x + i)] = color;
 			i++;
 		}
 		j++;
