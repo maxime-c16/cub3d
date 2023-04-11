@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 12:45:04 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 18:50:41 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:18:25 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define C_RED "\e[31m"
 # define C_GREEN "\e[32m"
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char		*str;
 	int			type;

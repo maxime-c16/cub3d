@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:51:42 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 12:07:39 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int render_rays(void)
+int	render_rays(void)
 {
-	t_dda *dda;
-	int x;
+	int		x;
+	t_dda	*dda;
 
 	refresh_image();
 	dda = _dda();
@@ -28,8 +28,8 @@ int render_rays(void)
 		wall_height();
 		if (x == WIN_WIDTH / 2)
 		{
-			_map()->hit_wall_x = dda->mapX;
-			_map()->hit_wall_y = dda->mapY;
+			_map()->hit_wall_x = dda->map_x;
+			_map()->hit_wall_y = dda->map_y;
 		}
 		calculate_sprite();
 		draw_wall(x, _ray()->wall.start, _ray()->wall.end);
@@ -38,7 +38,6 @@ int render_rays(void)
 	mlx_put_image_to_window(_mlx()->mlx, _mlx()->win, _mlx()->img, 0, 0);
 	return (0);
 }
-
 
 int	key_down(int keycode)
 {
@@ -61,7 +60,7 @@ int	key_down(int keycode)
 
 void	hook(void)
 {
-	t_mlx *ptr;
+	t_mlx	*ptr;
 
 	ptr = _mlx();
 	mlx_hook(ptr->win, ON_KEYDOWN, 1L << 0, key_down, NULL);

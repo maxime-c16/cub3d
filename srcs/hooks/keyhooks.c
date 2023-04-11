@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:42:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 17:07:221 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,3 @@ void	move_right(void)
 	ptr->x = futur_posx;
 	ptr->y = futur_posy;
 }
-

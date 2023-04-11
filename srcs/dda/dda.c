@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:29:01 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 12:43:45 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:13:09 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ static void	init_dda_1(double posX, double posY, double rayDirX, double rayDirY)
 	t_dda	*dda;
 
 	dda = _dda();
-	dda->mapX = (int)posX;
-	dda->mapY = (int)posY;
+	dda->map_x = (int)posX;
+	dda->map_y = (int)posY;
 	if (rayDirX == 0)
-		dda->deltaDistX = 1e30;
+		dda->delta_dist_x = 1e30;
 	else
-		dda->deltaDistX = fabs(1 / rayDirX);
+		dda->delta_dist_x = fabs(1 / rayDirX);
 	if (rayDirY == 0)
-		dda->deltaDistY = 1e30;
+		dda->delta_dist_y = 1e30;
 	else
-		dda->deltaDistY = fabs(1 / rayDirY);
+		dda->delta_dist_y = fabs(1 / rayDirY);
 	dda->hit = 0;
 }
 
@@ -37,15 +37,15 @@ static void	init_dda_x(double posX, double rayDirX)
 	dda = _dda();
 	if (rayDirX < 0)
 	{
-		dda->stepX = -1;
-		dda->sideDistX = (posX - dda->mapX)
-			* dda->deltaDistX;
+		dda->step_x = -1;
+		dda->side_dist_x = (posX - dda->map_x)
+			* dda->delta_dist_x;
 	}
 	else
 	{
-		dda->stepX = 1;
-		dda->sideDistX = (dda->mapX + 1.0 - posX)
-			* dda->deltaDistX;
+		dda->step_x = 1;
+		dda->side_dist_x = (dda->map_x + 1.0 - posX)
+			* dda->delta_dist_x;
 	}
 }
 
@@ -56,15 +56,15 @@ static void	init_dda_y(double posY, double rayDirY)
 	dda = _dda();
 	if (rayDirY < 0)
 	{
-		dda->stepY = -1;
-		dda->sideDistY = (posY - dda->mapY)
-			* dda->deltaDistY;
+		dda->step_y = -1;
+		dda->side_dist_y = (posY - dda->map_y)
+			* dda->delta_dist_y;
 	}
 	else
 	{
-		dda->stepY = 1;
-		dda->sideDistY = (dda->mapY + 1.0 - posY)
-			* dda->deltaDistY;
+		dda->step_y = 1;
+		dda->side_dist_y = (dda->map_y + 1.0 - posY)
+			* dda->delta_dist_y;
 	}
 }
 
@@ -85,22 +85,22 @@ void	dda_loop(t_dda *dda)
 {
 	while (dda->hit == 0)
 	{
-		if (dda->sideDistX < dda->sideDistY)
+		if (dda->side_dist_x < dda->side_dist_y)
 		{
 			dda->side = NORTH_SOUTH;
-			dda->mapX += dda->stepX;
-			dda->sideDistX += dda->deltaDistX;
+			dda->map_x += dda->step_x;
+			dda->side_dist_x += dda->delta_dist_x;
 		}
 		else
 		{
 			dda->side = WEST_EAST;
-			dda->mapY += dda->stepY;
-			dda->sideDistY += dda->deltaDistY;
+			dda->map_y += dda->step_y;
+			dda->side_dist_y += dda->delta_dist_y;
 		}
-		if (dda->mapX < 0 || dda->mapY < 0 || dda->mapX >= _map()->width
-			|| dda->mapY >= _map()->height)
+		if (dda->map_x < 0 || dda->map_y < 0 || dda->map_x >= _map()->width
+			|| dda->map_y >= _map()->height)
 			dda->hit = 1;
-		else if (_map()->map[(int)dda->mapY][(int)dda->mapX] == '1')
+		else if (_map()->map[(int)dda->map_y][(int)dda->map_x] == '1')
 			dda->hit = 1;
 	}
 	set_dda_side();

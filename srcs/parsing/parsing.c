@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:38:15 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/10 22:02:0200 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ static void	parse_settings(char *line)
 		handling_error("invalid game parameter", NULL);
 }
 
-void	parsing(char **av)
+void	parsing(int ac, char **av)
 {
 	t_map	*map;
 
+	if (ac != 2)
+		handling_error("wrong number of arguments", NULL);
 	map = _map();
 	parse_file(av);
 	open_file(av);

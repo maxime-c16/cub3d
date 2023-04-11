@@ -1,6 +1,6 @@
-NO ./texture_XPM/walk/1/2.xpm
+NO ./texture_XPM/backroom_wall.xpm
 WE ./texture_XPM/eagle.xpm
-EA ./texture_XPM/walk/1/1.xpm
+EA ./texture_XPM/blueWall.xpm
 SO ./texture_XPM/walk/1/0.xpm
 
 

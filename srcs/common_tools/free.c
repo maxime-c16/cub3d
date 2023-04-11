@@ -6,11 +6,11 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 16:58:05 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	free_array(char **array)
 {

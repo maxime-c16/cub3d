@@ -1,16 +1,22 @@
-FILES	=	dda/dda_utils.c \
+FILES	=	dda/tools/dda_utils.c \
 			dda/dda.c \
 			dda/ray.c \
-			hooks/hooks_utils.c \
+			hooks/tools/hooks_utils.c \
+			hooks/tools/keyhooks_utils.c \
 			hooks/hooks.c \
-			hooks/keyhooks_utils.c \
 			hooks/keyhooks.c \
-			sprites/sprites.c \
+			sprites/sprites_coor.c \
+			sprites/init_sprites.c \
+			sprites/minimap.c\
+			sprites/tools/minimap_utils.c \
+			sprites/tools/sprite_utils.c \
+			sprites/tools/sprite_utils2.c \
 			parsing/parse_color.c \
 			parsing/parse_file.c \
 			parsing/parse_map.c \
 			parsing/parse_textures.c \
 			parsing/parsing.c \
+			parsing/player.c \
 			parsing/tools/parse_check.c \
 			parsing/tools/parse_utils.c \
 			common_tools/free.c \
@@ -18,10 +24,7 @@ FILES	=	dda/dda_utils.c \
 			common_tools/singleton.c \
 			common_tools/singleton2.c \
 			common_tools/tools.c \
-			common_tools/tools2.c \
 			main.c \
-			minimap.c \
-			player.c \
 			
 DIR_OBJS = .objs
 

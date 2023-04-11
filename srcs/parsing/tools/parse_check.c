@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:01:25 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/11 16:18:34 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_param_filled(void)
 {
-	t_mlx		*mlx;
+	t_mlx	*mlx;
 	t_tex	*tex;
 
 	mlx = _mlx();

@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:39:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 14:42:19 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:00 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-
-void	ft_print_map(void)
-{
-	t_map	*map;
-	int		i;
-
-	map = _map();
-	i = 0;
-	dprintf(1, "printing map\n");
-	while (i < map->height)
-	{
-		dprintf(1, "%d\t%s\n", i, map->map[i]);
-		i++;
-	}
-}
+#include "../../includes/cub3d.h"
 
 int	get_height(int fd)
 {
@@ -55,115 +40,26 @@ int	get_height(int fd)
 	return (map->height);
 }
 
-void	wall_height(void)
+int	calculate_color(t_color color)
 {
-	t_ray	*ray;
-	t_dda	*dda;
+	int	r;
+	int	g;
+	int	b;
 
-	ray = _ray();
-	dda = _dda();
-	if (dda->side == NORTH_SOUTH)
-		ray->wallDist = dda->sideDistX - dda->deltaDistX;
-	else
-		ray->wallDist = dda->sideDistY - dda->deltaDistY;
-	ray->wall.height = (int)(WIN_HEIGHT / ray->wallDist);
-	ray->wall.start = -ray->wall.height / 2 + WIN_HEIGHT / 2;
-	if (ray->wall.start < 0)
-		ray->wall.start = 0;
-	ray->wall.end = ray->wall.height / 2 + WIN_HEIGHT / 2;
-	if (ray->wall.end >= WIN_HEIGHT)
-		ray->wall.end = WIN_HEIGHT - 1;
+	r = color.r;
+	g = color.g;
+	b = color.b;
+	return ((r << 16) | (g << 8) | b);
 }
 
-void	draw_minimap_on_top(int x)
+int	lerp(int a, int b, float t)
 {
-	t_mlx	*mlx;
-	int		y;
+	int	r;
+	int	g;
+	int	c;
 
-	mlx = _mlx();
-	y = 0;
-	while (y < _map()->height * MMAP_L)
-	{
-		if (x < _map()->width * MMAP_L)
-			mlx->addr[y * mlx->line_len / 4 + x]
-				= (int)_map()->minimap_addr[y
-				* _map()->minimap_line_len / 4 + x];
-		y++;
-	}
-}
-
-static void	draw_no_pixel_put(int x, int y, int color)
-{
-	t_mlx	*mlx;
-
-	mlx = _mlx();
-	mlx->addr[y * mlx->line_len / 4 + x] = color;
-}
-
-static void	draw_wall_ceil_floor(int x, int y)
-{
-	t_mlx	*mlx;
-
-	mlx = _mlx();
-	if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
-	{
-		draw_no_pixel_put(x, y,
-			(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
-	}
-	else
-	{
-		draw_no_pixel_put(x, y, calculate_color(mlx->c_ceiling));
-	}
-}
-
-static void	draw_wall_textured(int x, int y)
-{
-	if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
-	{
-		draw_no_pixel_put(x, y,
-			(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
-	}
-	else
-	{
-		calculate_y_tex();
-		draw_no_pixel_put(x, y, match_color_tex());
-	}
-	_tex()->tex_pos += _tex()->step;
-}
-
-void	draw_wall(int x, int start, int end)
-{
-	int	y;
-
-	y = 0;
-	while (y < WIN_HEIGHT)
-	{
-		if (y < start)
-			draw_wall_ceil_floor(x, y);
-		else if (y >= start && y < end)
-			draw_wall_textured(x, y);
-		else
-			draw_wall_ceil_floor(x, y);
-		y++;
-	}
-}
-
-void	refresh_image(void)
-{
-	t_mlx	*mlx;
-	t_map	*map;
-
-	mlx = _mlx();
-	map = _map();
-	mlx_destroy_image(mlx->mlx, mlx->img);
-	mlx_destroy_image(mlx->mlx, map->minimap_img);
-	mlx->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-	map->minimap_img = mlx_new_image(mlx->mlx, map->width * MMAP_L,
-			map->height * MMAP_L);
-	mlx->addr = (int *)mlx_get_data_addr(mlx->img, &mlx->bpp,
-			&mlx->line_len, &mlx->endian);
-	map->minimap_addr
-		= (int *)mlx_get_data_addr(map->minimap_img, &map->minimap_bpp,
-			&map->minimap_line_len, &map->minimap_endian);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	r = ((a >> 16) & 0xFF) + (((b >> 16) & 0xFF) - ((a >> 16) & 0xFF)) * t;
+	g = ((a >> 8) & 0xFF) + (((b >> 8) & 0xFF) - ((a >> 8) & 0xFF)) * t;
+	c = (a & 0xFF) + ((b & 0xFF) - (a & 0xFF)) * t;
+	return ((r << 16) | (g << 8) | c);
 }

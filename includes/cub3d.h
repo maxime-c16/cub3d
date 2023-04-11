@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 16:56:055 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:32 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,18 @@
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
 # define MIN_DIST 0.1
-# define MMAP_L WIN_WIDTH / 108
+# define MMAP_L 10
 # define MINI_FOV 15
 
 # define WALL '1'
 # define VOID ' '
 
-# define NORTH_SOUTH 0
-# define WEST_EAST 1
-
 # define NORTH 0
 # define SOUTH 1
 # define WEST 2
 # define EAST 3
+# define NORTH_SOUTH 0
+# define WEST_EAST 1
 
 # define ON_KEYDOWN 2
 # define ON_KEYUP 3
@@ -81,22 +80,7 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
-# define ENEMY_IDLE 0
-# define ENEMY_WALK 1
-# define ENEMY_ATTACK 2
-# define NUM_IDLE_FRAMES 4
-# define NUM_WALK_FRAMES 2
-# define ENEMY_SPEED 0.05
-
-typedef enum	e_enemy_direction
-{
-	ENEMY_NORTH,
-	ENEMY_SOUTH,
-	ENEMY_WEST,
-	ENEMY_EAST
-}				t_enemy_direction;
-
-typedef struct	s_color
+typedef struct s_color
 {
 	int		r;
 	int		g;
@@ -104,16 +88,16 @@ typedef struct	s_color
 	int		filled;
 }				t_color;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
+	int		bpp;
+	int		flag;
+	int		endian;
+	int		line_len;
 	void	*mlx;
 	void	*win;
 	void	*img;
 	int		*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		flag;
 	t_color	c_floor;
 	t_color	c_ceiling;
 }				t_mlx;
@@ -125,7 +109,7 @@ typedef struct s_fov
 	int		new_x;
 	int		new_y;
 	float	rotation;
-} t_fov;
+}				t_fov;
 
 typedef struct s_map
 {
@@ -146,7 +130,7 @@ typedef struct s_map
 	char	**map;
 	void	*minimap_img;
 	t_fov	fov;
-} t_map;
+}				t_map;
 
 typedef struct s_player
 {
@@ -160,9 +144,9 @@ typedef struct s_player
 	double	fov;
 	double	speed;
 	double	rot_speed;
-} t_player;
+}				t_player;
 
-typedef struct	s_wall
+typedef struct s_wall
 {
 	int		height;
 	int		start;
@@ -174,61 +158,49 @@ typedef struct s_ray
 	double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;
-	double	wallDist;
-	double	wallX;
+	double	wall_dist;
+	double	wall_x;
 	t_wall	wall;
 
-} t_ray;
+}				t_ray;
 
 typedef struct s_dda
 {
-	double	mapX;
-	double	mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	stepX;
-	double	stepY;
+	double	map_x;
+	double	map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	step_x;
+	double	step_y;
 	double	hit;
 	double	side;
-	double	sideHit;
-} t_dda;
+	double	side_hit;
+}				t_dda;
 
-typedef struct	s_sprite
+typedef struct s_sprite
 {
-	char	*path;
-	int		*addr;
-	void	*img;
 	int		bpp;
 	int		width;
 	int		height;
-	int		line_len;
 	int		endian;
+	int		line_len;
+	int		*addr;
+	char	*path;
+	void	*img;
 }				t_sprite;
 
-typedef struct	s_tex
+typedef struct s_tex
 {
-	t_sprite	sprite[4];
 	int			x;
 	int			y;
-	int			sideHit;
 	int			color;
+	int			side_hit;
 	double		step;
 	double		tex_pos;
+	t_sprite	sprite[4];
 }				t_tex;
-
-typedef struct	s_enemy
-{
-	double				x;
-	double				y;
-	double				animation_speed;
-	double				animation_timer;
-	int					animation_state;
-	int					animation_frame;
-	t_enemy_direction	direction;
-	t_sprite			walking[4][9];
-}				t_enemy;
 
 //singleton
 
@@ -238,97 +210,77 @@ t_player	*_player(void);
 t_dda		*_dda(void);
 t_ray		*_ray(void);
 t_tex		*_tex(void);
-t_enemy		*_enemy(void);
 
 //tools
 
-void	ft_print_map(void);
-int		get_height(int fd);
-void	wall_height(void);
-void	draw_wall(int x, int start, int end);
-void	refresh_image(void);
-int		calculate_color(t_color color);
-int		calculate_rgb(unsigned char r, unsigned char g, unsigned char b);
-void	calculate_y_tex(void);
-int		match_color_tex(void);
-void	draw_square(int x, int y, int color);
+int			get_height(int fd);
+int			calculate_color(t_color color);
+void		draw_wall(int x, int start, int end);
 
 //parsing
 
-int		skip_space(char *line);
-int 	is_empty_line(char *line);
-int		is_game_param(char *line);
-int 	check_param_filled(void);
-void	check_invalid_char(char *line);
-void	check_map_closed(void);
-void	check_nb_player(void);
-void	open_file(char **av);
-void 	skip_to_map(int fd);
-void	parsing(char **av);
-void	parse_map(char **av);
-void	parse_file(char **av);
-void	parse_tex_north(char *line);
-void	parse_tex_south(char *line);
-void	parse_tex_west(char *line);
-void	parse_tex_east(char *line);
-void	parse_color(char *line, t_color *color);
+int			skip_space(char *line);
+int			is_empty_line(char *line);
+int			is_game_param(char *line);
+int			check_param_filled(void);
+void		check_invalid_char(char *line);
+void		check_map_closed(void);
+void		check_nb_player(void);
+void		open_file(char **av);
+void		skip_to_map(int fd);
+void		init_player(void);
+void		parsing(int ac, char **av);
+void		parse_map(char **av);
+void		parse_file(char **av);
+void		parse_tex_north(char *line);
+void		parse_tex_south(char *line);
+void		parse_tex_west(char *line);
+void		parse_tex_east(char *line);
+void		parse_color(char *line, t_color *color);
 
 //free
 
-void	free_array(char **array);
-void	hasta_la_vista(int status);
-void	handling_error(char *error_msg, char *arg);
-
-//render
-
-void	render_map(t_mlx *ptr);
-
-//raycasting
-
-void	get_player_data(void);
+void		free_array(char **array);
+void		hasta_la_vista(int status);
+void		handling_error(char *error_msg, char *arg);
 
 //dda
 
-void	init_dda(int w);
-void	dda_loop(t_dda *dda);
-void	set_dda_side(void);
-void	init_ray(t_ray *ray, int x);
-int		render_rays(void);
+void		init_dda(int w);
+void		dda_loop(t_dda *dda);
+void		set_dda_side(void);
+void		init_ray(t_ray *ray, int x);
+int			render_rays(void);
 
 //hooks
 
-void	hook(void);
-void	rotate_left(void);
-void	rotate_right(void);
-void	move_forward(void);
-void	move_backward(void);
-void	move_left(void);
-void	move_right(void);
-void 	create_wall(void);
-void	delete_wall(void);
-int		check_wall(double x, double y);
-int		close_window(void);
+int			close_window(void);
+int			check_wall(double x, double y);
+void		hook(void);
+void		move_left(void);
+void		move_right(void);
+void		move_forward(void);
+void		move_backward(void);
+void		rotate_left(void);
+void		rotate_right(void);
+void		create_wall(void);
+void		delete_wall(void);
+void		wall_height(void);
+void		refresh_image(void);
 
 //sprites
 
-void	load_sprites(void);
-void	calculate_sprite(void);
-void	get_color(double y, int x, int y_tex);
-void	sprite_put_pixel(int x, int y, int color);
+int			match_color_tex(void);
+void		init_sprites(void);
+void		calculate_y_tex(void);
+void		calculate_sprite(void);
+void		get_color(double y, int x, int y_tex);
+void		sprite_put_pixel(int x, int y, int color);
 
 //minimap
 
-void	draw_minimap(void);
-void	highlight_block_border(void);
-
-//enemy
-
-void	update_enemy_direction(void);
-void	update_enemy_animation(void);
-void	move_enemy_towards_player(void);
-void	spawn_enemy_opposite_player(void);
-void	draw_enemy_sprite(void);
-void	load_walk(void);
-void	draw_enemy_sprite(void);
+void		draw_minimap(void);
+void		draw_square(int x, int y, int color);
+void		highlight_block_border(void);
 
 #endif

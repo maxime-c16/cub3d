@@ -6,11 +6,11 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 13:48:56 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/07 18:49:56 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 18:49:01 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 t_mlx	*_mlx(void)
 {
