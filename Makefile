@@ -52,7 +52,7 @@ all: $(NAME)
 $(NAME): $(MLX) $(OBJS) $(INC) 
 		 @$(MAKE) -C libft
 		 @echo "cub3d : libft compiled"
-		 @$(CC) -g $(CFLAGS) -o $(NAME) $(OBJS) $(INC) libft/libft.a -Lmlx -lmlx -lXext -lX11 -lm -lz
+		 @$(CC) $(OBJS) libft/libft.a -Lmlx -lmlx -lXext -lX11 -lm -lz $(CFLAGS) -o $(NAME) 
 		 @echo "cub3d : compiled"
 
 $(MLX):

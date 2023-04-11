@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 13:47:39 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:14:20 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720
 # define MIN_DIST 0.1
-# define MMAP_L 10
+# define MMAP_L WIN_WIDTH / 108
 # define MINI_FOV 15
 
 # define WALL '1'
