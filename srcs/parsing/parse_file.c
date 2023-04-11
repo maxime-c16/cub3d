@@ -6,7 +6,7 @@
 /*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:35:51 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/08 18:30:16 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 20:18:33 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	check_file_exist(char **av)
 	map->path = ft_strdup(av[1]);
 	map->fd = open(av[1], O_RDONLY);
 	if (map->fd < 0)
-		handling_error("file does not exist: ", map->path);
+		handling_error("cannot open: ", map->path);
 }
 
 static void	check_file_name(void)
