@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:34:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/10 21:57:56 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:58:05 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	hasta_la_vista(int status)
 			destroy_minimap(mlx->mlx);
 		mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
-		// mlx_destroy_display(mlx->mlx);
+		mlx_destroy_display(mlx->mlx);
 		free(mlx->mlx);
 	}
 	exit(status);

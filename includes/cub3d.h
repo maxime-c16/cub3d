@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 15:37:07 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 16:14:20 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:56:055 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 
 # define TRUE 1
 # define FALSE 0
+# define SUCCESS 0
+# define FAILURE 1
 
 # define WIN_WIDTH 1080
 # define WIN_HEIGHT 720

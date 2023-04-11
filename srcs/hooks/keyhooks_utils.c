@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyhooks_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:47:32 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 14:18:14 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/11 16:56:44 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,24 @@ int check_wall(double x, double y)
 
 	half_width = 0.1;
 	half_height = 0.1;
-	if (_map()->map[(int)y][(int)x] == '1')
-		return (1);
-	if (_map()->map[(int)(y + half_height)][(int)(x + half_width)] == '1')
-		return (1);
-	if (_map()->map[(int)(y - half_height)][(int)(x - half_width)] == '1')
-		return (1);
-	if (_map()->map[(int)(y + half_height)][(int)(x - half_width)] == '1')
-		return (1);
-	if (_map()->map[(int)(y - half_height)][(int)(x + half_width)] == '1')
-		return (1);
-	if (_map()->map[(int)(y + half_height)][(int)x] == '1')
-		return (1);
-	if (_map()->map[(int)(y - half_height)][(int)x] == '1')
-		return (1);
-	if (_map()->map[(int)y][(int)(x + half_width)] == '1')
-		return (1);
-	if (_map()->map[(int)y][(int)(x - half_width)] == '1')
-		return (1);
-	return (0);
+	if (_map()->map[(int)y][(int)x] == WALL)
+		return (FAILURE);
+	else if (_map()->map[(int)(y + half_height)][(int)(x + half_width)] == WALL)
+		return (FAILURE);
+	else if (_map()->map[(int)(y - half_height)][(int)(x - half_width)] == WALL)
+		return (FAILURE);
+	// else if (_map()->map[(int)(y + half_height)][(int)(x - half_width)] == WALL)
+	// 	return (FAILURE);
+	// else if (_map()->map[(int)(y - half_height)][(int)(x + half_width)] == WALL)
+	// 	return (FAILURE);
+	// else if (_map()->map[(int)(y + half_height)][(int)x] == WALL)
+	// 	return (FAILURE);
+	// else if (_map()->map[(int)(y - half_height)][(int)x] == WALL)
+	// 	return (FAILURE);
+	// else if (_map()->map[(int)y][(int)(x + half_width)] == WALL)
+	// 	return (FAILURE);
+	// else if (_map()->map[(int)y][(int)(x - half_width)] == WALL)
+	// 	return (FAILURE);
+	return (SUCCESS);
 }
 
