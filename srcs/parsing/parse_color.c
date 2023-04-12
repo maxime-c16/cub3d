@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:38:18 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/08 18:30:16 by mcauchy          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:22:47 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ static void	error_on_color(char *color, char **split)
 	handling_error("invalid color format", NULL);
 }
 
-static void	check_invalid_color(char **split)
+static void	check_invalid_color(char **split, t_color *check)
 {
 	int		i;
 	int		j;
 	char	*color;
 
 	i = 0;
+	if (check->filled == TRUE)
+		handling_error("duplicate color param detected", NULL);
 	while (split[i])
 	{
 		j = 0;
@@ -54,7 +56,7 @@ void	parse_color(char *line, t_color	*color)
 	split = ft_split(line, ',');
 	if (!split)
 		handling_error("a memory allocation failed", NULL);
-	check_invalid_color(split);
+	check_invalid_color(split, color);
 	while (split[loop])
 	{
 		if (loop == 0)
