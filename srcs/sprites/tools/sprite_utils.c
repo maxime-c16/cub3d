@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 17:27:11 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 18:52:06 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 15:00:40 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,13 @@ static void	draw_no_pixel_put(int x, int y, int color)
 	mlx->addr[y * mlx->line_len / 4 + x] = color;
 }
 
-static void	draw_wall_ceil_floor(int x, int y)
+static void	draw_wall_ceil_floor(int x, int y, t_color color)
 {
-	t_mlx	*mlx;
-
-	mlx = _mlx();
 	if (y < _map()->height * MMAP_L && x < _map()->width * MMAP_L)
 		draw_no_pixel_put(x, y,
 			(int)_map()->minimap_addr[y * _map()->minimap_line_len / 4 + x]);
 	else
-		draw_no_pixel_put(x, y, calculate_color(mlx->c_ceiling));
+		draw_no_pixel_put(x, y, calculate_color(color));
 }
 
 static void	draw_wall_textured(int x, int y)
@@ -53,11 +50,11 @@ void	draw_wall(int x, int start, int end)
 	while (y < WIN_HEIGHT)
 	{
 		if (y < start)
-			draw_wall_ceil_floor(x, y);
+			draw_wall_ceil_floor(x, y, _mlx()->c_ceiling);
 		else if (y >= start && y < end)
 			draw_wall_textured(x, y);
 		else
-			draw_wall_ceil_floor(x, y);
+			draw_wall_ceil_floor(x, y, _mlx()->c_floor);
 		y++;
 	}
 }
