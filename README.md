@@ -38,4 +38,6 @@ make macos
 
 - W, A, S, D: Move
 - Left, Right: Rotate
-- ESC: Quit
+- ESC or ❌ : Exit
+
+
