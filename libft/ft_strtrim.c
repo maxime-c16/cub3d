@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/14 21:08:40 by maximecauch       #+#    #+#             */
-/*   Updated: 2023/04/05 18:27:57 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:09:53 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ char	*ft_strtrim(char *s1, char const *set, int flag)
 	str[i] = 0;
 	if (flag == 1)
 		free(s1);
+	if (!*str)
+		return (free(str), NULL);
 	return (str);
 }

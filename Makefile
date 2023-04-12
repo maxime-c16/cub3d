@@ -38,7 +38,7 @@ INC		=	includes/cub3d.h
 
 CC		=	clang
 
-CFLAGS	=	-Wall -Wextra -Werror -g3 -I includes/
+CFLAGS	=	-Wall -Wextra -Werror -g3 -o3 -I includes/
 
 MLX		=	mlx_Linux
 

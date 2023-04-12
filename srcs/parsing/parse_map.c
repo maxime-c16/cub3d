@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:48:21 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/11 19:51:18 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 17:13:28 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ void	parse_map(char **av)
 	{
 		map->map[i] = ft_strdup(map->line);
 		map->map[i] = ft_strtrim(map->map[i], "\n", 1);
-		if (!map->map[i])
-			handling_error("a memory allocation failed", NULL);
-		if (is_empty_line(map->map[i]))
-			handling_error("map cannot be seperate by empty line", NULL);
+		if (!map->map[i] || is_empty_line(map->map[i]))
+			handling_error("empty lines not allowed in map or at EOF", NULL);
 		free(map->line);
 		map->line = get_next_line(map->fd);
 		i++;
