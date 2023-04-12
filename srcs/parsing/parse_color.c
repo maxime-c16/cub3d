@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:38:18 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/12 14:22:47 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:27:39 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@ static void	error_on_color(char *color, char **split)
 	handling_error("invalid color format", NULL);
 }
 
-static void	check_invalid_color(char **split, t_color *check)
+static void	check_invalid_color(char **split)
 {
 	int		i;
 	int		j;
 	char	*color;
 
 	i = 0;
-	if (check->filled == TRUE)
-		handling_error("duplicate color param detected", NULL);
 	while (split[i])
 	{
 		j = 0;
@@ -53,10 +51,12 @@ void	parse_color(char *line, t_color	*color)
 	char	**split;
 
 	loop = 0;
+	if (color->filled)
+		handling_error("duplicate color param detected", NULL);
 	split = ft_split(line, ',');
 	if (!split)
 		handling_error("a memory allocation failed", NULL);
-	check_invalid_color(split, color);
+	check_invalid_color(split);
 	while (split[loop])
 	{
 		if (loop == 0)
