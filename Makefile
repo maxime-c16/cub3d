@@ -44,7 +44,7 @@ MLX		=	mlx_Linux
 
 RM		=	rm -f
 
-NAME	=	cub3d
+NAME	=	cub3D
 
 MLX_MACOS = mlx_macos
 
