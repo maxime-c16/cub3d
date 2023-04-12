@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:48:21 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/12 17:13:28 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:16:23 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	parse_map(char **av)
 	map = _map();
 	open_file(av);
 	skip_to_map(map->fd);
-	map->map = ft_calloc(map->height + 1, sizeof(char *));
+	map->map = ft_calloc(map->height * 2, sizeof(char *));
 	if (!map->map)
 		handling_error("a memory allocation failed", NULL);
 	while (map->line)

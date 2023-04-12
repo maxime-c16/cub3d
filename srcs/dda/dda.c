@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 14:29:01 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 18:13:09 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:07:05 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ void	dda_loop(t_dda *dda)
 			dda->map_y += dda->step_y;
 			dda->side_dist_y += dda->delta_dist_y;
 		}
-		if (dda->map_x < 0 || dda->map_y < 0 || dda->map_x >= _map()->width
-			|| dda->map_y >= _map()->height)
-			dda->hit = 1;
-		else if (_map()->map[(int)dda->map_y][(int)dda->map_x] == '1')
+		if (_map()->map[(int)dda->map_y][(int)dda->map_x] == '1')
 			dda->hit = 1;
 	}
 	set_dda_side();

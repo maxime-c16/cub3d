@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 14:39:20 by mcauchy           #+#    #+#             */
-/*   Updated: 2023/04/11 18:52:05 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 18:16:16 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_height(int fd)
 		while (map->line[i] && (map->line[i] == '\t' || map->line[i] == VOID
 				|| map->line[i] == WALL || map->line[i] == '0'))
 		{
-			if (map->line[i] == '1')
+			if (map->line[i] == '1' && is_empty_line(map->line) == FALSE)
 			{
 				map->height++;
 				break ;
