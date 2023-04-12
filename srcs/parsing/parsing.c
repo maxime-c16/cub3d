@@ -6,7 +6,7 @@
 /*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 20:38:15 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/11 18:52:07 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/12 14:39:05 by lbisson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static void	parse_settings(char *line)
 {
-	if (*line && ft_strnstr(line, "NO", 2))
+	if (*line && ft_strnstr(line, "NO ", 3))
 		parse_tex_north(line + 2);
-	else if (*line && ft_strnstr(line, "SO", 2))
+	else if (*line && ft_strnstr(line, "SO ", 3))
 		parse_tex_south(line + 2);
-	else if (*line && ft_strnstr(line, "WE", 2))
+	else if (*line && ft_strnstr(line, "WE ", 3))
 		parse_tex_west(line + 2);
-	else if (*line && ft_strnstr(line, "EA", 2))
+	else if (*line && ft_strnstr(line, "EA ", 3))
 		parse_tex_east(line + 2);
-	else if (*line && ft_strnstr(line, "F", 1))
+	else if (*line && ft_strnstr(line, "F ", 2))
 		parse_color(line + 1, &_mlx()->c_floor);
-	else if (*line && ft_strnstr(line, "C", 1))
+	else if (*line && ft_strnstr(line, "C ", 2))
 		parse_color(line + 1, &_mlx()->c_ceiling);
 	else
 		handling_error("invalid game parameter", NULL);
