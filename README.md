@@ -37,7 +37,7 @@ make macos
 ## Controls
 
 - W, A, S, D: Move
-- Left, Right: Rotate
+- Left, Right: Rotate camera
 - ESC or ❌ : Exit
 
 
