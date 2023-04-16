@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 19:01:25 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/11 19:20:40 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/16 14:39:46 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,16 @@ int	check_param_filled(void)
 void	check_invalid_char(char *line)
 {
 	int		i;
-	char	c;
 
 	i = 0;
 	while (line && line[i])
 	{
-		c = line[i];
 		if (line[i] != ' '
 			&& line[i] != '1' && line[i] != '0'
 			&& line[i] != 'N' && line[i] != 'S'
 			&& line[i] != 'E' && line[i] != 'W')
-			handling_error("invalid char detected in map: ", &c);
+			handling_error("invalid char detected in map at this line ~> ",
+				ft_itoa(i + 1));
 		i++;
 	}
 }

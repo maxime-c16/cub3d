@@ -6,7 +6,7 @@
 #    By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 18:20:58 by mcauchy           #+#    #+#              #
-#    Updated: 2023/04/12 18:20:59 by mcauchy          ###   ########.fr        #
+#    Updated: 2023/04/16 14:41:21 by mcauchy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ INC		=	includes/cub3d.h
 
 CC		=	clang
 
-CFLAGS	=	-Wall -Wextra -Werror -g3 -o3 -I includes/
+CFLAGS	=	-Wall -Wextra -Werror -g3 -I includes/
 
 MLX		=	mlx_Linux
 

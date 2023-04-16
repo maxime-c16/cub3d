@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbisson <lbisson@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mcauchy <mcauchy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:38:18 by lbisson           #+#    #+#             */
-/*   Updated: 2023/04/12 14:27:39 by lbisson          ###   ########.fr       */
+/*   Updated: 2023/04/16 14:26:28 by mcauchy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	check_invalid_color(char **split)
 	{
 		j = 0;
 		color = ft_strtrim(split[i], " \n", 0);
+		if (!color)
+			error_on_color(color, split);
 		if (ft_strlen(color) > 11 || !*color
 			|| ft_atoi(color) > 255 || ft_atoi(color) < 0)
 			error_on_color(color, split);
